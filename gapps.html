@@ -1,0 +1,2416 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GApps - Moto G34</title>
+  <link rel="icon" type="image/png" href="logo.png">
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #FF1B2D;
+      --secondary-color: #722ED1;
+      --accent-color: #00D9FF;
+      --dark-bg: #0A0E1A;
+      --card-bg: rgba(20, 20, 35, 0.8);
+      --text-light: #FFFFFF;
+      --text-secondary: #B0B0B0;
+      --neon-blue: #00D9FF;
+      --neon-pink: #FF1B2D;
+      --neon-purple: #722ED1;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Rajdhani', 'Roboto', sans-serif;
+    }
+
+    body {
+      background-color: var(--dark-bg);
+      color: var(--text-light);
+      min-height: 100vh;
+      background-image: 
+        radial-gradient(circle at 10% 20%, rgba(114, 46, 209, 0.2) 0%, transparent 50%),
+        radial-gradient(circle at 90% 80%, rgba(0, 217, 255, 0.2) 0%, transparent 50%),
+        radial-gradient(circle at 50% 50%, rgba(255, 27, 45, 0.1) 0%, transparent 50%);
+      background-attachment: fixed;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    ::-webkit-scrollbar {
+      width: 12px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: rgba(20, 20, 35, 0.5);
+      border-radius: 10px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, var(--neon-blue), var(--neon-pink));
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 217, 255, 0.5);
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      box-shadow: 0 0 15px rgba(255, 27, 45, 0.7);
+    }
+
+    .page-title {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      z-index: 100;
+    }
+
+    .page-title h1 {
+      font-size: 2rem;
+      font-weight: bold;
+      background: linear-gradient(45deg, var(--neon-blue), var(--neon-pink), var(--neon-purple));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 0 10px var(--primary-color);
+    }
+
+    .page-title .material-icons {
+      font-size: 2rem;
+      color: var(--primary-color);
+      filter: drop-shadow(0 0 10px var(--primary-color));
+    }
+
+    .theme-picker {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--text-light);
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      z-index: 100;
+    }
+
+    .theme-picker:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: var(--neon-blue);
+      box-shadow: 0 0 15px rgba(0, 217, 255, 0.3);
+      transform: translateY(-3px);
+    }
+
+    .theme-options {
+      position: fixed;
+      top: 75px;
+      right: 20px;
+      background: rgba(20, 20, 35, 0.95);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+      padding: 15px;
+      display: none;
+      flex-direction: column;
+      gap: 10px;
+      z-index: 99;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .theme-options.active {
+      display: flex;
+    }
+
+    .theme-option {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 15px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .theme-option:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .theme-color {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .theme-default .theme-color {
+      background: #FF1B2D;
+    }
+
+    .theme-red .theme-color {
+      background: #FF1B2D;
+    }
+
+    .theme-blue .theme-color {
+      background: #0066FF;
+    }
+
+    .theme-green .theme-color {
+      background: #00C853;
+    }
+
+    main {
+      padding-top: 100px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+
+    .rom-list {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .rom-list.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .rom-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .rom-title {
+      font-size: 2.5rem;
+      font-weight: bold;
+      background: linear-gradient(45deg, var(--neon-blue), var(--neon-pink), var(--neon-purple));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 0 30px rgba(0, 217, 255, 0.3);
+    }
+
+    .back-button {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 50px;
+      padding: 12px 25px;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-light);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .back-button:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: var(--neon-blue);
+      box-shadow: 0 0 15px rgba(0, 217, 255, 0.3);
+      transform: translateY(-3px);
+    }
+
+    .rom-controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+      gap: 1rem;
+      width: 100%;
+      flex-wrap: wrap;
+    }
+
+    .search-container {
+      flex: 1;
+      position: relative;
+      max-width: 500px;
+      min-width: 250px;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 15px 20px 15px 50px;
+      border-radius: 50px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-light);
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .search-input:focus {
+      outline: none;
+      border-color: var(--neon-blue);
+      box-shadow: 0 0 15px rgba(0, 217, 255, 0.3);
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-secondary);
+      pointer-events: none;
+    }
+
+    .search-clear {
+      position: absolute;
+      right: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-secondary);
+      cursor: pointer;
+      display: none;
+    }
+
+    .search-clear.visible {
+      display: block;
+    }
+
+    .filter-dropdown {
+      position: relative;
+    }
+
+    .filter-button {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 50px;
+      padding: 15px 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--text-light);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .filter-button:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: var(--neon-blue);
+      box-shadow: 0 0 15px rgba(0, 217, 255, 0.3);
+    }
+
+    .filter-menu {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      background: rgba(20, 20, 35, 0.95);
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      min-width: 200px;
+      z-index: 10;
+      margin-top: 10px;
+      display: none;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .filter-menu.active {
+      display: block;
+    }
+
+    .filter-option {
+      padding: 15px 20px;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .filter-option:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .view-toggle {
+      display: flex;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 50px;
+      overflow: hidden;
+    }
+
+    .view-button {
+      background: none;
+      border: none;
+      color: var(--text-secondary);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 45px;
+      height: 45px;
+      transition: all 0.2s ease;
+    }
+
+    .view-button.active {
+      background: var(--primary-color);
+      color: var(--text-light);
+    }
+
+    .view-button:hover:not(.active) {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .rom-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: 30px;
+      transition: all 0.3s ease;
+    }
+
+    .rom-cards.list-view {
+      grid-template-columns: 1fr;
+    }
+
+    .rom-card {
+      position: relative;
+      background: linear-gradient(135deg, rgba(20, 20, 35, 0.9), rgba(30, 30, 50, 0.9));
+      border-radius: 20px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      cursor: pointer;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      opacity: 0;
+      transform: translateY(30px);
+      height: auto;
+      min-height: 300px;
+      display: flex;
+      flex-direction: column;
+      clip-path: polygon(0 0, 100% 0, 100% 85%, 85% 100%, 0 100%);
+    }
+
+    .rom-cards.list-view .rom-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px;
+      clip-path: none;
+    }
+
+    .rom-card.show {
+      animation: slideUp 0.6s ease forwards;
+    }
+
+    @keyframes slideUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .rom-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--neon-blue), var(--neon-pink), var(--neon-purple));
+      border-radius: 4px 4px 0 0;
+    }
+
+    .rom-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      clip-path: polygon(100% 0, 0 100%, 100% 100%);
+    }
+
+    .rom-card:hover {
+      transform: translateY(-10px) scale(1.02);
+      box-shadow: 0 20px 40px rgba(0, 217, 255, 0.4);
+      border-color: var(--neon-blue);
+      background: linear-gradient(135deg, rgba(20, 20, 35, 0.95), rgba(40, 40, 60, 0.95));
+    }
+
+    .rom-content {
+      padding: 25px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .rom-cards.list-view .rom-content {
+      flex: 1;
+      padding: 0 20px;
+    }
+
+    .rom-name {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--text-light);
+      margin-bottom: 15px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .rom-cards.list-view .rom-name {
+      font-size: 1.3rem;
+      margin-bottom: 0;
+    }
+
+    .rom-version {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--primary-color);
+      padding: 5px 15px;
+      border-radius: 50px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      margin-bottom: 20px;
+      border: 1px solid rgba(255, 27, 45, 0.3);
+    }
+
+    .rom-cards.list-view .rom-version {
+      display: none;
+    }
+
+    .rom-description {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      margin-bottom: 20px;
+      line-height: 1.5;
+      flex-grow: 1;
+    }
+
+    .rom-cards.list-view .rom-description {
+      display: none;
+    }
+
+    .rom-details {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .rom-cards.list-view .rom-details {
+      display: none;
+    }
+
+    .rom-detail {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      background: rgba(255, 255, 255, 0.05);
+      padding: 5px 10px;
+      border-radius: 50px;
+    }
+
+    .rom-detail .material-icons {
+      font-size: 1rem;
+      color: var(--accent-color);
+    }
+
+    .rom-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: auto;
+    }
+
+    .rom-cards.list-view .rom-actions {
+      margin-top: 0;
+    }
+
+    .favorite-button {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      width: 45px;
+      height: 45px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      color: var(--text-secondary);
+    }
+
+    .favorite-button:hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: scale(1.1);
+    }
+
+    .favorite-button.active {
+      color: var(--primary-color);
+      border-color: var(--primary-color);
+    }
+
+    .favorite-button.active:hover {
+      background: rgba(255, 27, 45, 0.1);
+    }
+
+    .favorite-button .material-icons {
+      font-size: 1.2rem;
+    }
+
+    .download-button {
+      background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+      color: var(--text-light);
+      border: none;
+      border-radius: 50px;
+      padding: 12px 20px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: all 0.3s ease;
+      box-shadow: 0 5px 15px rgba(255, 27, 45, 0.3);
+      flex: 1;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .rom-cards.list-view .download-button {
+      width: auto;
+      padding: 10px 15px;
+      font-size: 0.9rem;
+      flex: none;
+    }
+
+    .download-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px rgba(255, 27, 45, 0.5);
+    }
+
+    .loading {
+      display: none;
+      text-align: center;
+      padding: 3rem;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .loading.show {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
+      animation: fadeIn 0.5s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .loading .material-icons {
+      font-size: 3rem;
+      color: var(--primary-color);
+      animation: spin 1.5s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .no-results {
+      text-align: center;
+      padding: 3rem;
+      color: var(--text-secondary);
+    }
+
+    .no-results .material-icons {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+      color: var(--primary-color);
+    }
+
+    .no-results h3 {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+      color: var(--text-light);
+    }
+
+    .favorites-section {
+      display: none;
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-top: 2rem;
+    }
+
+    .favorites-section.show {
+      display: block;
+    }
+
+    .favorites-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+
+    .favorites-title {
+      font-size: 2.5rem;
+      font-weight: bold;
+      background: linear-gradient(45deg, var(--neon-blue), var(--neon-pink), var(--neon-purple));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .favorites-empty {
+      text-align: center;
+      padding: 3rem;
+      color: var(--text-secondary);
+    }
+
+    .favorites-empty .material-icons {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+      color: var(--primary-color);
+    }
+
+    .favorites-empty h3 {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+      color: var(--text-light);
+    }
+
+    .developer-group {
+      margin-bottom: 2rem;
+    }
+
+    .developer-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 1.5rem;
+      padding: 15px 20px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 15px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .developer-header .material-icons {
+      color: var(--primary-color);
+      font-size: 1.5rem;
+    }
+
+    .developer-name {
+      font-weight: 600;
+      color: var(--text-light);
+      font-size: 1.2rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .tutorial-button {
+      position: fixed;
+      bottom: 30px;
+      left: 30px;
+      background: linear-gradient(45deg, var(--secondary-color), var(--primary-color));
+      border: none;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      font-size: 1.5rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      box-shadow: 0 5px 20px rgba(114, 46, 209, 0.4);
+      z-index: 99;
+    }
+
+    .tutorial-button:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(114, 46, 209, 0.6);
+    }
+
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.8);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal {
+      background: linear-gradient(135deg, rgba(20, 20, 35, 0.95), rgba(30, 30, 50, 0.95));
+      border-radius: 20px;
+      width: 100%;
+      max-width: 700px;
+      max-height: 90vh;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+      transform: scale(0.9);
+      transition: transform 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .modal-overlay.active .modal {
+      transform: scale(1);
+    }
+
+    .modal-header {
+      padding: 25px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .modal-title {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: var(--text-light);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .modal-close {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--text-light);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .modal-close:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: var(--neon-pink);
+      box-shadow: 0 0 15px rgba(255, 27, 45, 0.3);
+      transform: rotate(90deg);
+    }
+
+    .modal-body {
+      padding: 25px;
+      overflow-y: auto;
+      flex: 1;
+    }
+
+    .modal-tabs {
+      display: flex;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      margin-bottom: 25px;
+    }
+
+    .modal-tab {
+      padding: 15px 25px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: all 0.2s ease;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .modal-tab.active {
+      color: var(--primary-color);
+      border-bottom-color: var(--primary-color);
+    }
+
+    .modal-tab-content {
+      display: none;
+    }
+
+    .modal-tab-content.active {
+      display: block;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .modal-section {
+      margin-bottom: 25px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 15px;
+      padding: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .modal-section:hover {
+      box-shadow: 0 5px 15px rgba(0, 217, 255, 0.2);
+      transform: translateY(-2px);
+    }
+
+    .modal-section-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--text-light);
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .modal-section-title .material-icons {
+      font-size: 1.3rem;
+      color: var(--primary-color);
+    }
+
+    .modal-list {
+      list-style: none;
+      padding-left: 20px;
+      margin: 10px 0;
+    }
+
+    .modal-list li {
+      position: relative;
+      padding-left: 15px;
+      margin-bottom: 10px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    .modal-list li::before {
+      content: '•';
+      position: absolute;
+      left: 0;
+      color: var(--primary-color);
+    }
+
+    .modal-code {
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 10px;
+      padding: 15px;
+      font-family: 'Roboto Mono', monospace;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      overflow-x: auto;
+      margin: 15px 0;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .modal-code .code-line {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .modal-footer {
+      padding: 25px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      justify-content: flex-end;
+      gap: 15px;
+    }
+
+    .modal-button {
+      padding: 12px 25px;
+      border-radius: 50px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .modal-button-secondary {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--text-light);
+    }
+
+    .modal-button-secondary:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: var(--neon-blue);
+      box-shadow: 0 0 15px rgba(0, 217, 255, 0.3);
+    }
+
+    .modal-button-primary {
+      background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+      color: var(--text-light);
+      box-shadow: 0 5px 15px rgba(255, 27, 45, 0.3);
+    }
+
+    .modal-button-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px rgba(255, 27, 45, 0.5);
+    }
+
+    .telegram-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: #0088cc;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .telegram-button:hover {
+      background: #0077b3;
+      transform: translateY(-2px);
+    }
+
+    .telegram-button .material-icons {
+      font-size: 1.2rem;
+    }
+
+    .android-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: #3DDC84;
+      color: #212121;
+      padding: 10px 20px;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .android-button:hover {
+      background: #2FB868;
+      transform: translateY(-2px);
+    }
+
+    .android-button .material-icons {
+      font-size: 1.2rem;
+    }
+
+    .info-card {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 15px;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-left: 4px solid var(--primary-color);
+    }
+
+    .info-card-title {
+      font-weight: 600;
+      color: var(--primary-color);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .info-card-title .material-icons {
+      font-size: 1.2rem;
+    }
+
+    .info-card-content {
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    .info-card-description {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 15px;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-left: 4px solid var(--primary-color);
+    }
+
+    .info-card-description-title {
+      font-weight: 600;
+      color: var(--primary-color);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .info-card-description-title .material-icons {
+      font-size: 1.2rem;
+    }
+
+    .info-card-description-content {
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-bottom: 25px;
+    }
+
+    .notification {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+      color: var(--text-light);
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      padding: 20px 30px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      z-index: 500;
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.3s ease;
+      max-width: 400px;
+    }
+
+    .notification.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .notification-icon {
+      color: var(--text-light);
+      font-size: 1.5rem;
+    }
+
+    .notification-content {
+      flex: 1;
+    }
+
+    .notification-title {
+      font-weight: 600;
+      margin-bottom: 5px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .notification-message {
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .notification-close {
+      background: none;
+      border: none;
+      color: var(--text-light);
+      cursor: pointer;
+    }
+
+    .orb {
+      position: fixed;
+      top: -10px;
+      z-index: 1;
+      user-select: none;
+      cursor: default;
+      animation: orbFall linear infinite;
+      border-radius: 50%;
+      box-shadow: 0 0 10px var(--primary-color);
+    }
+
+    @keyframes orbFall {
+      0% {
+        transform: translateY(-100px) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(calc(100vh + 100px)) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    .loader-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(10, 14, 26, 0.95);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+
+    .loader-container.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .loader {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      --color: var(--primary-color);
+      --animation: 2s ease-in-out infinite;
+    }
+
+    .loader .circle {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      width: 20px;
+      height: 20px;
+      border: solid 2px var(--color);
+      border-radius: 50%;
+      margin: 0 10px;
+      background-color: transparent;
+      animation: circle-keys var(--animation);
+    }
+
+    .loader .circle .dot {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background-color: var(--color);
+      animation: dot-keys var(--animation);
+    }
+
+    .loader .circle .outline {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      animation: outline-keys var(--animation);
+    }
+
+    .circle:nth-child(2) {
+      animation-delay: 0.3s;
+    }
+
+    .circle:nth-child(3) {
+      animation-delay: 0.6s;
+    }
+
+    .circle:nth-child(4) {
+      animation-delay: 0.9s;
+    }
+
+    .circle:nth-child(2) .dot {
+      animation-delay: 0.3s;
+    }
+
+    .circle:nth-child(3) .dot {
+      animation-delay: 0.6s;
+    }
+
+    .circle:nth-child(4) .dot {
+      animation-delay: 0.9s;
+    }
+
+    .circle:nth-child(1) .outline {
+      animation-delay: 0.9s;
+    }
+
+    .circle:nth-child(2) .outline {
+      animation-delay: 1.2s;
+    }
+
+    .circle:nth-child(3) .outline {
+      animation-delay: 1.5s;
+    }
+
+    .circle:nth-child(4) .outline {
+      animation-delay: 1.8s;
+    }
+
+    @keyframes circle-keys {
+      0% {
+        transform: scale(1);
+        opacity: 1;
+      }
+
+      50% {
+        transform: scale(1.5);
+        opacity: 0.5;
+      }
+
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    @keyframes dot-keys {
+      0% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(0);
+      }
+
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    @keyframes outline-keys {
+      0% {
+        transform: scale(0);
+        outline: solid 20px var(--color);
+        outline-offset: 0;
+        opacity: 1;
+      }
+
+      100% {
+        transform: scale(1);
+        outline: solid 0 transparent;
+        outline-offset: 20px;
+        opacity: 0;
+      }
+    }
+
+    .android-versions {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .android-version {
+      background-color: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      padding: 1rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border: 1px solid transparent;
+    }
+
+    .android-version:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+      border-color: var(--primary-color);
+      transform: translateY(-2px);
+    }
+
+    .android-version .material-icons {
+      font-size: 1.5rem;
+      color: var(--primary-color);
+      margin-bottom: 0.5rem;
+    }
+
+    .android-version-name {
+      font-weight: 500;
+      color: var(--text-light);
+    }
+
+    @media (max-width: 768px) {
+      .rom-cards {
+        grid-template-columns: 1fr;
+      }
+      
+      .rom-controls {
+        flex-direction: column;
+      }
+      
+      .search-container {
+        max-width: 100%;
+      }
+      
+      .info-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .modal {
+        max-width: 100%;
+        border-radius: 15px;
+      }
+      
+      .modal-tabs {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+      
+      .modal-section {
+        padding: 15px;
+      }
+      
+      .tutorial-button {
+        bottom: 15px;
+        left: 15px;
+        width: 50px;
+        height: 50px;
+        font-size: 1.2rem;
+      }
+      
+      .android-versions {
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-title">
+    <span class="material-icons">apps</span>
+    <h1>GApps</h1>
+  </div>
+
+  <button class="theme-picker" id="themePicker" aria-label="Escolher tema">
+    <span class="material-icons">palette</span>
+  </button>
+
+  <div class="theme-options" id="themeOptions">
+    <div class="theme-option theme-default" data-theme="default">
+      <div class="theme-color"></div>
+      <span>Padrão</span>
+    </div>
+    <div class="theme-option theme-red" data-theme="red">
+      <div class="theme-color"></div>
+      <span>Red</span>
+    </div>
+    <div class="theme-option theme-blue" data-theme="blue">
+      <div class="theme-color"></div>
+      <span>Blue</span>
+    </div>
+    <div class="theme-option theme-green" data-theme="green">
+      <div class="theme-color"></div>
+      <span>Green</span>
+    </div>
+  </div>
+
+  <div class="loader-container" id="loaderContainer">
+    <div class="loader">
+      <div class="circle">
+        <div class="dot"></div>
+        <div class="outline"></div>
+      </div>
+      <div class="circle">
+        <div class="dot"></div>
+        <div class="outline"></div>
+      </div>
+      <div class="circle">
+        <div class="dot"></div>
+        <div class="outline"></div>
+      </div>
+      <div class="circle">
+        <div class="dot"></div>
+        <div class="outline"></div>
+      </div>
+    </div>
+  </div>
+
+  <main>
+    <div class="rom-list" id="romList">
+      <div class="rom-header">
+        <h2 class="rom-title" id="romTitle">GApps para Moto G34</h2>
+        <button class="back-button" id="backButton">
+          <span class="material-icons">arrow_back</span>
+          Voltar
+        </button>
+      </div>
+      
+      <div class="rom-controls">
+        <div class="search-container">
+          <span class="material-icons search-icon">search</span>
+          <input type="text" class="search-input" id="searchInput" placeholder="Buscar GApps...">
+          <span class="material-icons search-clear" id="searchClear">clear</span>
+        </div>
+        
+        <div class="filter-dropdown">
+          <button class="filter-button" id="filterButton">
+            <span class="material-icons">filter_list</span>
+            Filtrar
+          </button>
+          <div class="filter-menu" id="filterMenu">
+            <div class="filter-option" data-filter="all">
+              <span class="material-icons">apps</span>
+              Todos os GApps
+            </div>
+            <div class="filter-option" data-filter="favorites">
+              <span class="material-icons">favorite</span>
+              Favoritos
+            </div>
+            <div class="filter-option" data-filter="developer">
+              <span class="material-icons">person</span>
+              Por Desenvolvedor
+            </div>
+            <div class="filter-option" data-filter="date">
+              <span class="material-icons">calendar_today</span>
+              Por Data
+            </div>
+          </div>
+        </div>
+        
+        <div class="view-toggle">
+          <button class="view-button active" id="gridViewButton" title="Visualização em grade">
+            <span class="material-icons">grid_view</span>
+          </button>
+          <button class="view-button" id="listViewButton" title="Visualização em lista">
+            <span class="material-icons">view_list</span>
+          </button>
+        </div>
+      </div>
+      
+      <div class="loading" id="loading">
+        <span class="material-icons">refresh</span>
+        <p>Carregando GApps...</p>
+      </div>
+      
+      <div class="rom-cards" id="romCards">
+      </div>
+    </div>
+
+    <div class="favorites-section" id="favoritesSection">
+      <div class="favorites-header">
+        <h2 class="favorites-title">Meus GApps Favoritos</h2>
+        <button class="back-button" id="backFromFavorites">
+          <span class="material-icons">arrow_back</span>
+          Voltar
+        </button>
+      </div>
+      
+      <div class="loading" id="favoritesLoading">
+        <span class="material-icons">refresh</span>
+        <p>Carregando favoritos...</p>
+      </div>
+      
+      <div class="rom-cards" id="favoritesCards">
+      </div>
+      
+      <div class="favorites-empty" id="favoritesEmpty">
+        <span class="material-icons">favorite_border</span>
+        <h3>Nenhum GApp favoritado</h3>
+        <p>Clique no ícone de coração em qualquer GApp para adicioná-lo aos favoritos.</p>
+      </div>
+    </div>
+  </main>
+
+  <button class="tutorial-button" id="tutorialButton">
+    <span class="material-icons">help_outline</span>
+  </button>
+
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 class="modal-title" id="modalTitle">Informações do GApp</h3>
+        <button class="modal-close" id="modalClose">
+          <span class="material-icons">close</span>
+        </button>
+      </div>
+      
+      <div class="modal-body">
+        <div class="modal-tabs" id="modalTabs">
+          <div class="modal-tab active" data-tab="details">Detalhes</div>
+          <div class="modal-tab" data-tab="source">Fonte</div>
+        </div>
+        
+        <div class="modal-tab-content active" id="details-tab">
+          <div class="info-grid">
+            <div class="info-card">
+              <div class="info-card-title">
+                <span class="material-icons">apps</span>
+                Versão
+              </div>
+              <div class="info-card-content" id="romVersion">
+              </div>
+            </div>
+            
+            <div class="info-card">
+              <div class="info-card-title">
+                <span class="material-icons">person</span>
+                Desenvolvedor
+              </div>
+              <div class="info-card-content" id="romDeveloper">
+              </div>
+            </div>
+            
+            <div class="info-card">
+              <div class="info-card-title">
+                <span class="material-icons">update</span>
+                Última Atualização
+              </div>
+              <div class="info-card-content" id="romLastUpdate">
+              </div>
+            </div>
+          </div>
+          
+          <div class="info-card-description">
+            <div class="info-card-description-title">
+              <span class="material-icons">description</span>
+              Descrição
+            </div>
+            <div class="info-card-description-content" id="romDescription">
+            </div>
+          </div>
+          
+          <div class="modal-section" id="changelogSection">
+            <h4 class="modal-section-title">
+              <span class="material-icons">history</span>
+              Registro de Mudanças
+            </h4>
+            <ul class="modal-list" id="changelog">
+            </ul>
+          </div>
+          
+          <div class="modal-section" id="knownIssuesSection">
+            <h4 class="modal-section-title">
+              <span class="material-icons">error_outline</span>
+              Problemas Conhecidos
+            </h4>
+            <ul class="modal-list" id="knownIssues">
+            </ul>
+          </div>
+          
+          <div class="modal-section" id="notesSection">
+            <h4 class="modal-section-title">
+              <span class="material-icons">sticky_note_2</span>
+              Notas
+            </h4>
+            <ul class="modal-list" id="notes">
+            </ul>
+          </div>
+          
+          <div class="modal-section" id="creditsSection">
+            <h4 class="modal-section-title">
+              <span class="material-icons">emoji_events</span>
+              Créditos
+            </h4>
+            <ul class="modal-list" id="credits">
+            </ul>
+          </div>
+        </div>
+        
+        <div class="modal-tab-content" id="source-tab">
+          <div class="modal-section">
+            <h4 class="modal-section-title">
+              <span class="material-icons">link</span>
+              Fonte do GApp
+            </h4>
+            <div id="sourceLink">
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="modal-footer">
+        <button class="modal-button modal-button-secondary" id="cancelButton">
+          <span class="material-icons">close</span>
+          Cancelar
+        </button>
+        <button class="modal-button modal-button-primary" id="confirmButton">
+          <span class="material-icons">download</span>
+          Baixar GApp
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="downloadModalOverlay">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 class="modal-title" id="downloadModalTitle">Selecione a versão do Android</h3>
+        <button class="modal-close" id="downloadModalClose">
+          <span class="material-icons">close</span>
+        </button>
+      </div>
+      
+      <div class="modal-body">
+        <div class="modal-section">
+          <h4 class="modal-section-title">
+            <span class="material-icons">android</span>
+            Escolha uma versão do Android para download
+          </h4>
+          <div class="android-versions" id="androidVersions">
+            <!-- As versões do Android serão carregadas dinamicamente aqui -->
+          </div>
+        </div>
+      </div>
+      
+      <div class="modal-footer">
+        <button class="modal-button modal-button-secondary" id="downloadModalCancel">
+          <span class="material-icons">close</span>
+          Cancelar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="tutorialModalOverlay">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 class="modal-title">Como Instalar GApps</h3>
+        <button class="modal-close" id="tutorialModalClose">
+          <span class="material-icons">close</span>
+        </button>
+      </div>
+      
+      <div class="modal-body">
+        <div class="modal-section">
+          <h4 class="modal-section-title">
+            <span class="material-icons">warning</span>
+            Aviso Importante
+          </h4>
+          <p>A instalação de GApps é necessária para ter acesso aos serviços do Google, como Play Store, Gmail, YouTube, etc. Este processo deve ser feito após instalar uma ROM customizada que não inclui GApps por padrão. Não somos responsáveis por quaisquer danos causados ao seu dispositivo. Prossiga com cuidado e sempre faça backup dos seus dados importantes antes de prosseguir.</p>
+        </div>
+        
+        <div class="modal-section">
+          <h4 class="modal-section-title">
+            <span class="material-icons">list_alt</span>
+            Pré-requisitos
+          </h4>
+          <ul class="modal-list">
+            <li>ROM customizada instalada (sem GApps)</li>
+            <li>Recovery personalizado (TWRP recomendado)</li>
+            <li>Bateria com pelo menos 50% de carga</li>
+            <li>Faça backup dos seus dados importantes</li>
+          </ul>
+        </div>
+        
+        <div class="modal-section">
+          <h4 class="modal-section-title">
+            <span class="material-icons">build</span>
+            Instruções de Instalação
+          </h4>
+          <ol class="modal-list" style="list-style-type: decimal;">
+            <li>Baixe o pacote GApps correto para a sua versão do Android</li>
+            <li>Transfira o arquivo para o seu dispositivo</li>
+            <li>Reinicie no modo recovery</li>
+            <li>Selecione "Install" ou "Instalar"</li>
+            <li>Navegue até o local do arquivo GApps e selecione-o</li>
+            <li>Deslize para confirmar a instalação</li>
+            <li>Reinicie o dispositivo</li>
+            <li>Configure sua conta Google</li>
+          </ol>
+        </div>
+        
+        <div class="modal-section">
+          <h4 class="modal-section-title">
+            <span class="material-icons">help_outline</span>
+            Solução de Problemas
+          </h4>
+          <ul class="modal-list">
+            <li>Se encontrar erros durante a instalação, verifique se você baixou a versão correta para sua versão do Android</li>
+            <li>Se o dispositivo ficar preso no bootloop, tente reinstalar a ROM e os GApps</li>
+            <li>Para problemas específicos, consulte a fonte do GApp para obter suporte</li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="modal-footer">
+        <button class="modal-button modal-button-primary" id="tutorialModalConfirm">
+          <span class="material-icons">check</span>
+          Entendido
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="notification" id="notification">
+    <span class="material-icons notification-icon">check_circle</span>
+    <div class="notification-content">
+      <div class="notification-title">Sucesso</div>
+      <div class="notification-message">Operação concluída com sucesso!</div>
+    </div>
+    <button class="notification-close">
+      <span class="material-icons">close</span>
+    </button>
+  </div>
+
+  <script src="gapps-data.js"></script>
+  <script src="colors.js"></script>
+  
+  <script>
+    const romList = document.getElementById('romList');
+    const romCards = document.getElementById('romCards');
+    const favoritesSection = document.getElementById('favoritesSection');
+    const favoritesCards = document.getElementById('favoritesCards');
+    const favoritesEmpty = document.getElementById('favoritesEmpty');
+    const favoritesLoading = document.getElementById('favoritesLoading');
+    const loading = document.getElementById('loading');
+    const backButton = document.getElementById('backButton');
+    const backFromFavorites = document.getElementById('backFromFavorites');
+    const notification = document.getElementById('notification');
+    const tutorialButton = document.getElementById('tutorialButton');
+    const searchInput = document.getElementById('searchInput');
+    const searchClear = document.getElementById('searchClear');
+    const gridViewButton = document.getElementById('gridViewButton');
+    const listViewButton = document.getElementById('listViewButton');
+    const filterButton = document.getElementById('filterButton');
+    const filterMenu = document.getElementById('filterMenu');
+    const themePicker = document.getElementById('themePicker');
+    const themeOptions = document.getElementById('themeOptions');
+    const loaderContainer = document.getElementById('loaderContainer');
+    
+    const modalOverlay = document.getElementById('modalOverlay');
+    const modalClose = document.getElementById('modalClose');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalTabs = document.querySelectorAll('.modal-tab');
+    const modalTabContents = document.querySelectorAll('.modal-tab-content');
+    const cancelButton = document.getElementById('cancelButton');
+    const confirmButton = document.getElementById('confirmButton');
+    
+    const downloadModalOverlay = document.getElementById('downloadModalOverlay');
+    const downloadModalClose = document.getElementById('downloadModalClose');
+    const downloadModalCancel = document.getElementById('downloadModalCancel');
+    const downloadModalTitle = document.getElementById('downloadModalTitle');
+    const androidVersions = document.getElementById('androidVersions');
+    
+    const tutorialModalOverlay = document.getElementById('tutorialModalOverlay');
+    const tutorialModalClose = document.getElementById('tutorialModalClose');
+    const tutorialModalConfirm = document.getElementById('tutorialModalConfirm');
+    
+    let settings = {
+      viewMode: 'grid',
+      notificationsEnabled: true,
+      lastUpdateSeen: null
+    };
+
+    let currentRom = null;
+    let allRoms = [];
+    let favorites = [];
+    let currentFilter = 'all';
+    let currentDevice = '';
+
+    function showLoader() {
+      loaderContainer.classList.add('active');
+    }
+
+    function hideLoader() {
+      setTimeout(() => {
+        loaderContainer.classList.remove('active');
+      }, 500);
+    }
+
+    function initializeApp() {
+      loadSettings();
+      loadFavorites();
+      setupEventListeners();
+      
+      const urlParams = new URLSearchParams(window.location.search);
+      currentDevice = urlParams.get('device') || 'motog34';
+      
+      document.getElementById('romTitle').textContent = `GApps para ${currentDevice.charAt(0).toUpperCase() + currentDevice.slice(1)}`;
+      
+      loadRoms();
+    }
+
+    function setupEventListeners() {
+      backButton.addEventListener('click', function() {
+        window.location.href = 'index.html';
+      });
+
+      backFromFavorites.addEventListener('click', function() {
+        showRomList();
+      });
+
+      tutorialButton.addEventListener('click', function() {
+        tutorialModalOverlay.classList.add('active');
+      });
+
+      searchInput.addEventListener('input', function() {
+        const value = this.value;
+        if (value) {
+          searchClear.classList.add('visible');
+        } else {
+          searchClear.classList.remove('visible');
+        }
+        filterRoms(value);
+      });
+
+      searchClear.addEventListener('click', function() {
+        searchInput.value = '';
+        searchClear.classList.remove('visible');
+        filterRoms('');
+      });
+
+      filterButton.addEventListener('click', function() {
+        filterMenu.classList.toggle('active');
+      });
+
+      document.querySelectorAll('.filter-option').forEach(option => {
+        option.addEventListener('click', function() {
+          const filter = this.getAttribute('data-filter');
+          applyFilter(filter);
+          filterMenu.classList.remove('active');
+        });
+      });
+
+      gridViewButton.addEventListener('click', function() {
+        setViewMode('grid');
+      });
+
+      listViewButton.addEventListener('click', function() {
+        setViewMode('list');
+      });
+
+      themePicker.addEventListener('click', function() {
+        themeOptions.classList.toggle('active');
+      });
+
+      document.querySelectorAll('.theme-option').forEach(option => {
+        option.addEventListener('click', function() {
+          const theme = this.getAttribute('data-theme');
+          applyTheme(theme);
+          themeOptions.classList.remove('active');
+        });
+      });
+
+      notification.querySelector('.notification-close').addEventListener('click', function() {
+        notification.classList.remove('show');
+      });
+
+      modalClose.addEventListener('click', closeModal);
+      cancelButton.addEventListener('click', closeModal);
+      confirmButton.addEventListener('click', showDownloadModal);
+      
+      downloadModalClose.addEventListener('click', closeDownloadModal);
+      downloadModalCancel.addEventListener('click', closeDownloadModal);
+      
+      modalTabs.forEach(tab => {
+        tab.addEventListener('click', function() {
+          const tabName = this.getAttribute('data-tab');
+          switchTab(tabName);
+        });
+      });
+      
+      tutorialModalClose.addEventListener('click', function() {
+        tutorialModalOverlay.classList.remove('active');
+      });
+      
+      tutorialModalConfirm.addEventListener('click', function() {
+        tutorialModalOverlay.classList.remove('active');
+      });
+      
+      modalOverlay.addEventListener('click', function(e) {
+        if (e.target === modalOverlay) {
+          closeModal();
+        }
+      });
+      
+      downloadModalOverlay.addEventListener('click', function(e) {
+        if (e.target === downloadModalOverlay) {
+          closeDownloadModal();
+        }
+      });
+      
+      tutorialModalOverlay.addEventListener('click', function(e) {
+        if (e.target === tutorialModalOverlay) {
+          tutorialModalOverlay.classList.remove('active');
+        }
+      });
+
+      document.addEventListener('click', function(e) {
+        if (!filterButton.contains(e.target) && !filterMenu.contains(e.target)) {
+          filterMenu.classList.remove('active');
+        }
+        if (!themePicker.contains(e.target) && !themeOptions.contains(e.target)) {
+          themeOptions.classList.remove('active');
+        }
+      });
+    }
+
+    function loadRoms() {
+      loading.classList.add('show');
+      romCards.innerHTML = '';
+      
+      setTimeout(() => {
+        loading.classList.remove('show');
+        
+        allRoms = getGappsByDevice(currentDevice);
+        
+        if (allRoms.length === 0) {
+          romCards.innerHTML = `
+            <div class="no-results">
+              <span class="material-icons">search_off</span>
+              <h3>Nenhum GApp encontrado</h3>
+              <p>Não há GApps disponíveis para este dispositivo no momento.</p>
+            </div>
+          `;
+        } else {
+          applyFilter(currentFilter);
+        }
+        
+        setTimeout(() => {
+          romList.classList.add('show');
+        }, 100);
+      }, 300);
+    }
+
+    function showFavorites() {
+      romList.style.display = 'none';
+      favoritesSection.style.display = 'block';
+      tutorialButton.style.display = 'none';
+      
+      favoritesLoading.classList.add('show');
+      favoritesCards.innerHTML = '';
+      favoritesEmpty.style.display = 'none';
+      
+      setTimeout(() => {
+        favoritesLoading.classList.remove('show');
+        
+        if (favorites.length === 0) {
+          favoritesEmpty.style.display = 'block';
+        } else {
+          displayRoms(favorites, favoritesCards);
+        }
+        
+        setTimeout(() => {
+          favoritesSection.classList.add('show');
+        }, 100);
+      }, 300);
+    }
+
+    function showRomList() {
+      favoritesSection.classList.remove('show');
+      romList.style.display = 'block';
+      tutorialButton.style.display = 'flex';
+    }
+
+    function displayRoms(roms, container = romCards) {
+      container.innerHTML = '';
+      
+      if (roms.length === 0) {
+        container.innerHTML = `
+          <div class="no-results">
+            <span class="material-icons">search_off</span>
+            <h3>Nenhum GApp encontrado</h3>
+            <p>Não há GApps correspondentes à sua busca.</p>
+          </div>
+        `;
+        return;
+      }
+      
+      roms.forEach((rom, index) => {
+        if (rom.isDeveloperGroup) {
+          const developerGroup = document.createElement('div');
+          developerGroup.className = 'developer-group';
+          
+          const developerHeader = document.createElement('div');
+          developerHeader.className = 'developer-header';
+          developerHeader.innerHTML = `
+            <span class="material-icons">person</span>
+            <span class="developer-name">${rom.developer}</span>
+          `;
+          
+          developerGroup.appendChild(developerHeader);
+          
+          const romsContainer = document.createElement('div');
+          romsContainer.className = 'rom-cards';
+          
+          rom.roms.forEach((devRom, devIndex) => {
+            const romCard = createRomCard(devRom, devIndex);
+            romsContainer.appendChild(romCard);
+          });
+          
+          developerGroup.appendChild(romsContainer);
+          container.appendChild(developerGroup);
+        } else {
+          const romCard = createRomCard(rom, index);
+          container.appendChild(romCard);
+        }
+      });
+    }
+
+    function createRomCard(rom, index) {
+      const romCard = document.createElement('div');
+      romCard.className = 'rom-card';
+      
+      if (rom.easterEgg) {
+        romCard.classList.add('easter-egg');
+      }
+      
+      const isFavorite = favorites.some(fav => fav.name === rom.name && fav.developer === rom.developer);
+      
+      romCard.innerHTML = `
+        <div class="rom-content">
+          <h3 class="rom-name">${rom.name}</h3>
+          <span class="rom-version">${rom.version}</span>
+          <p class="rom-description">${rom.description}</p>
+          <div class="rom-details">
+            <div class="rom-detail">
+              <span class="material-icons">sd_card</span>
+              <span>${rom.size}</span>
+            </div>
+            <div class="rom-detail">
+              <span class="material-icons">calendar_today</span>
+              <span>${rom.date}</span>
+            </div>
+            <div class="rom-detail">
+              <span class="material-icons">update</span>
+              <span>${rom.lastUpdate || 'N/A'}</span>
+            </div>
+            <div class="rom-detail">
+              <span class="material-icons">person</span>
+              <span>${rom.developer}</span>
+            </div>
+          </div>
+        </div>
+        <div class="rom-actions">
+          <button class="favorite-button ${isFavorite ? 'active' : ''}" data-rom-name="${rom.name}" data-rom-dev="${rom.developer}">
+            <span class="material-icons">${isFavorite ? 'favorite' : 'favorite_border'}</span>
+          </button>
+          <button class="download-button" data-rom-index="${index}">
+            <span class="material-icons">download</span>
+            Download
+          </button>
+        </div>
+      `;
+      
+      setTimeout(() => {
+        romCard.classList.add('show');
+      }, index * 100);
+      
+      romCard.querySelector('.favorite-button').addEventListener('click', function() {
+        const romName = this.getAttribute('data-rom-name');
+        const romDev = this.getAttribute('data-rom-dev');
+        toggleFavorite(romName, romDev, this);
+      });
+      
+      romCard.querySelector('.download-button').addEventListener('click', function() {
+        const romIndex = this.getAttribute('data-rom-index');
+        const selectedRom = rom.isDeveloperGroup ? rom.roms[romIndex] : rom;
+        showRomDetails(selectedRom);
+      });
+      
+      return romCard;
+    }
+
+    function toggleFavorite(romName, romDev, buttonElement) {
+      const index = favorites.findIndex(fav => fav.name === romName && fav.developer === romDev);
+      
+      if (index === -1) {
+        const rom = allRoms.find(r => r.name === romName && r.developer === romDev);
+        if (rom) {
+          favorites.push({
+            name: rom.name,
+            developer: rom.developer,
+            version: rom.version,
+            description: rom.description,
+            size: rom.size,
+            date: rom.date,
+            lastUpdate: rom.lastUpdate,
+            url: rom.url,
+            downloads: rom.downloads,
+            supportedSystems: rom.supportedSystems,
+            details: rom.details,
+            source: rom.source,
+            easterEgg: rom.easterEgg || false
+          });
+          showNotification('Adicionado aos Favoritos', `${romName} foi adicionado aos seus favoritos.`);
+          
+          if (buttonElement) {
+            buttonElement.classList.add('active');
+            buttonElement.querySelector('.material-icons').textContent = 'favorite';
+          }
+        }
+      } else {
+        favorites.splice(index, 1);
+        showNotification('Removido dos Favoritos', `${romName} foi removido dos seus favoritos.`);
+        
+        if (buttonElement) {
+          buttonElement.classList.remove('active');
+          buttonElement.querySelector('.material-icons').textContent = 'favorite_border';
+        }
+      }
+      
+      saveFavorites();
+      
+      if (currentFilter === 'favorites') {
+        applyFilter('favorites');
+      } else {
+        applyFilter(currentFilter);
+      }
+    }
+
+    function applyFilter(filter) {
+      currentFilter = filter;
+      
+      let filteredRoms = [];
+      
+      switch (filter) {
+        case 'all':
+          filteredRoms = allRoms;
+          break;
+        case 'favorites':
+          filteredRoms = favorites;
+          break;
+        case 'developer':
+          const developers = [...new Set(allRoms.map(rom => rom.developer).filter(dev => dev && dev.trim() !== ''))];
+          filteredRoms = developers.map(dev => ({
+            isDeveloperGroup: true,
+            developer: dev,
+            roms: allRoms.filter(rom => rom.developer === dev)
+          }));
+          break;
+        case 'date':
+          filteredRoms = [...allRoms].sort((a, b) => {
+            const dateA = new Date(a.date.split('/').reverse().join('/'));
+            const dateB = new Date(b.date.split('/').reverse().join('/'));
+            return dateB - dateA;
+          });
+          break;
+        default:
+          filteredRoms = allRoms;
+      }
+      
+      displayRoms(filteredRoms);
+    }
+
+    function filterRoms(searchTerm) {
+      if (!searchTerm) {
+        applyFilter(currentFilter);
+        return;
+      }
+      
+      let romsToFilter = currentFilter === 'favorites' ? favorites : allRoms;
+      
+      const filteredRoms = romsToFilter.filter(rom => {
+        const term = searchTerm.toLowerCase();
+        return (
+          rom.name.toLowerCase().includes(term) ||
+          rom.version.toLowerCase().includes(term) ||
+          rom.description.toLowerCase().includes(term) ||
+          rom.developer.toLowerCase().includes(term)
+        );
+      });
+      
+      displayRoms(filteredRoms);
+    }
+
+    function setViewMode(mode) {
+      settings.viewMode = mode;
+      saveSettings();
+      
+      if (mode === 'grid') {
+        romCards.classList.remove('list-view');
+        gridViewButton.classList.add('active');
+        listViewButton.classList.remove('active');
+      } else {
+        romCards.classList.add('list-view');
+        gridViewButton.classList.remove('active');
+        listViewButton.classList.add('active');
+      }
+    }
+
+    function showRomDetails(rom) {
+      currentRom = rom;
+      
+      modalTitle.textContent = rom.name;
+      
+      document.getElementById('romVersion').textContent = rom.details.version;
+      document.getElementById('romDeveloper').textContent = rom.details.dev;
+      document.getElementById('romLastUpdate').textContent = rom.lastUpdate || 'N/A';
+      document.getElementById('romDescription').textContent = rom.details.description;
+      
+      const changelogHtml = rom.details.changelog.map(item => `<li>${item}</li>`).join('');
+      document.getElementById('changelog').innerHTML = changelogHtml || '<li>Nenhuma alteração recente</li>';
+      
+      document.getElementById('changelogSection').style.display = rom.details.changelog.length > 0 ? 'block' : 'none';
+      
+      const issuesHtml = rom.details.knownIssues.map(item => `<li>${item}</li>`).join('');
+      document.getElementById('knownIssues').innerHTML = issuesHtml || '<li>Nenhum problema conhecido</li>';
+      
+      document.getElementById('knownIssuesSection').style.display = rom.details.knownIssues.length > 0 ? 'block' : 'none';
+      
+      const notesHtml = rom.details.notes.map(item => `<li>${item}</li>`).join('');
+      document.getElementById('notes').innerHTML = notesHtml || '<li>Nenhuma nota adicional</li>';
+      
+      document.getElementById('notesSection').style.display = rom.details.notes.length > 0 ? 'block' : 'none';
+      
+      if (rom.details.credits) {
+        const creditsHtml = rom.details.credits.map(item => `<li>${item}</li>`).join('');
+        document.getElementById('credits').innerHTML = creditsHtml;
+        document.getElementById('creditsSection').style.display = 'block';
+      } else {
+        document.getElementById('creditsSection').style.display = 'none';
+      }
+      
+      let sourceHtml;
+      if (rom.easterEgg) {
+        sourceHtml = `<a href="${rom.source}" target="_blank" class="android-button"><span class="material-icons">android</span> Acessar</a>`;
+      } else {
+        sourceHtml = `<a href="${rom.source}" target="_blank" class="telegram-button"><span class="material-icons">send</span> Acessar</a>`;
+      }
+      document.getElementById('sourceLink').innerHTML = sourceHtml;
+      
+      modalOverlay.classList.add('active');
+    }
+
+    function switchTab(tabName) {
+      modalTabs.forEach(tab => {
+        tab.classList.remove('active');
+      });
+      
+      modalTabContents.forEach(content => {
+        content.classList.remove('active');
+      });
+      
+      document.querySelector(`[data-tab="${tabName}"]`).classList.add('active');
+      document.getElementById(`${tabName}-tab`).classList.add('active');
+    }
+
+    function closeModal() {
+      modalOverlay.classList.remove('active');
+      currentRom = null;
+    }
+
+    function showDownloadModal() {
+      if (!currentRom) return;
+      
+      downloadModalTitle.textContent = `Selecione a versão do Android - ${currentRom.name}`;
+      androidVersions.innerHTML = '';
+      
+      // Criar botões para cada versão do Android suportada
+      currentRom.supportedSystems.forEach(version => {
+        const versionButton = document.createElement('div');
+        versionButton.className = 'android-version';
+        versionButton.innerHTML = `
+          <span class="material-icons">android</span>
+          <div class="android-version-name">Android ${version}</div>
+        `;
+        
+        versionButton.addEventListener('click', function() {
+          if (currentRom.downloads && currentRom.downloads[version]) {
+            window.open(currentRom.downloads[version], '_blank');
+            closeDownloadModal();
+            
+            if (settings.notificationsEnabled) {
+              showNotification('Download Iniciado', `O download do ${currentRom.name} para Android ${version} foi iniciado.`);
+            }
+          }
+        });
+        
+        androidVersions.appendChild(versionButton);
+      });
+      
+      downloadModalOverlay.classList.add('active');
+    }
+
+    function closeDownloadModal() {
+      downloadModalOverlay.classList.remove('active');
+    }
+
+    function showNotification(title, message) {
+      if (!settings.notificationsEnabled) return;
+      
+      const titleElement = notification.querySelector('.notification-title');
+      const messageElement = notification.querySelector('.notification-message');
+      
+      titleElement.textContent = title;
+      messageElement.textContent = message;
+      
+      notification.classList.add('show');
+      
+      setTimeout(() => {
+        notification.classList.remove('show');
+      }, 5000);
+    }
+
+    function saveSettings() {
+      localStorage.setItem('gappsSettings', JSON.stringify(settings));
+    }
+
+    function loadSettings() {
+      const savedSettings = localStorage.getItem('gappsSettings');
+      if (savedSettings) {
+        settings = JSON.parse(savedSettings);
+      }
+      
+      setViewMode(settings.viewMode);
+    }
+
+    function saveFavorites() {
+      localStorage.setItem('gappsFavorites', JSON.stringify(favorites));
+    }
+
+    function loadFavorites() {
+      const savedFavorites = localStorage.getItem('gappsFavorites');
+      if (savedFavorites) {
+        favorites = JSON.parse(savedFavorites);
+      }
+    }
+
+    function createOrb() {
+      const orb = document.createElement('div');
+      orb.className = 'orb';
+      
+      const currentTheme = localStorage.getItem('selectedTheme') || 'default';
+      let orbColor = '#FF1B2D';
+      
+      if (currentTheme === 'red') {
+        orbColor = '#FF1B2D';
+      } else if (currentTheme === 'blue') {
+        orbColor = '#0066FF';
+      } else if (currentTheme === 'green') {
+        orbColor = '#00C853';
+      }
+      
+      orb.style.backgroundColor = orbColor;
+      orb.style.boxShadow = `0 0 10px ${orbColor}`;
+      orb.style.left = Math.random() * window.innerWidth + 'px';
+      orb.style.animationDuration = Math.random() * 3 + 5 + 's';
+      orb.style.opacity = Math.random();
+      orb.style.width = Math.random() * 10 + 10 + 'px';
+      orb.style.height = orb.style.width;
+      
+      document.body.appendChild(orb);
+      
+      setTimeout(() => {
+        orb.remove();
+      }, 8000);
+    }
+
+    setInterval(createOrb, 300);
+
+    document.addEventListener('DOMContentLoaded', initializeApp);
+
+    // Feito com ♡ por Riq:)
+  </script>
+</body>
+</html>

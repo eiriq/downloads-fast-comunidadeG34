@@ -385,6 +385,7 @@
 
     .rom-cards.list-view {
       grid-template-columns: 1fr;
+      gap: 15px;
     }
 
     .rom-card {
@@ -407,10 +408,12 @@
 
     .rom-cards.list-view .rom-card {
       display: flex;
+      flex-direction: row;
       align-items: center;
-      justify-content: space-between;
-      padding: 20px;
+      padding: 15px;
+      min-height: 100px;
       clip-path: none;
+      border-radius: 15px;
     }
 
     .rom-card.show {
@@ -446,11 +449,19 @@
       clip-path: polygon(100% 0, 0 100%, 100% 100%);
     }
 
+    .rom-cards.list-view .rom-card::after {
+      display: none;
+    }
+
     .rom-card:hover {
       transform: translateY(-10px) scale(1.02);
       box-shadow: 0 20px 40px rgba(0, 217, 255, 0.4);
       border-color: var(--neon-blue);
       background: linear-gradient(135deg, rgba(20, 20, 35, 0.95), rgba(40, 40, 60, 0.95));
+    }
+
+    .rom-cards.list-view .rom-card:hover {
+      transform: translateY(-3px);
     }
 
     .rom-content {
@@ -461,8 +472,15 @@
     }
 
     .rom-cards.list-view .rom-content {
+      padding: 0;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
       flex: 1;
-      padding: 0 20px;
+    }
+
+    .rom-info {
+      flex: 1;
     }
 
     .rom-name {
@@ -475,8 +493,8 @@
     }
 
     .rom-cards.list-view .rom-name {
-      font-size: 1.3rem;
-      margin-bottom: 0;
+      font-size: 1.2rem;
+      margin-bottom: 5px;
     }
 
     .rom-version {
@@ -492,7 +510,10 @@
     }
 
     .rom-cards.list-view .rom-version {
-      display: none;
+      margin-bottom: 0;
+      margin-right: 10px;
+      font-size: 0.7rem;
+      padding: 3px 10px;
     }
 
     .rom-description {
@@ -515,7 +536,9 @@
     }
 
     .rom-cards.list-view .rom-details {
-      display: none;
+      display: flex;
+      gap: 8px;
+      margin-bottom: 0;
     }
 
     .rom-detail {
@@ -529,9 +552,18 @@
       border-radius: 50px;
     }
 
+    .rom-cards.list-view .rom-detail {
+      font-size: 0.7rem;
+      padding: 3px 8px;
+    }
+
     .rom-detail .material-icons {
       font-size: 1rem;
       color: var(--accent-color);
+    }
+
+    .rom-cards.list-view .rom-detail .material-icons {
+      font-size: 0.8rem;
     }
 
     .rom-actions {
@@ -542,6 +574,7 @@
 
     .rom-cards.list-view .rom-actions {
       margin-top: 0;
+      margin-left: 10px;
     }
 
     .favorite-button {
@@ -556,6 +589,11 @@
       cursor: pointer;
       transition: all 0.2s ease;
       color: var(--text-secondary);
+    }
+
+    .rom-cards.list-view .favorite-button {
+      width: 35px;
+      height: 35px;
     }
 
     .favorite-button:hover {
@@ -574,6 +612,10 @@
 
     .favorite-button .material-icons {
       font-size: 1.2rem;
+    }
+
+    .rom-cards.list-view .favorite-button .material-icons {
+      font-size: 1rem;
     }
 
     .download-button {
@@ -597,9 +639,8 @@
     }
 
     .rom-cards.list-view .download-button {
-      width: auto;
-      padding: 10px 15px;
-      font-size: 0.9rem;
+      padding: 8px 15px;
+      font-size: 0.8rem;
       flex: none;
     }
 
@@ -1354,6 +1395,35 @@
         height: 50px;
         font-size: 1.2rem;
       }
+
+      .rom-cards.list-view .rom-card {
+        padding: 10px;
+        min-height: 80px;
+      }
+
+      .rom-cards.list-view .rom-name {
+        font-size: 1rem;
+      }
+
+      .rom-cards.list-view .rom-version {
+        font-size: 0.6rem;
+        padding: 2px 6px;
+      }
+
+      .rom-cards.list-view .rom-detail {
+        font-size: 0.6rem;
+        padding: 2px 6px;
+      }
+
+      .rom-cards.list-view .favorite-button {
+        width: 30px;
+        height: 30px;
+      }
+
+      .rom-cards.list-view .download-button {
+        padding: 6px 10px;
+        font-size: 0.7rem;
+      }
     }
   </style>
 </head>
@@ -1988,25 +2058,22 @@
       
       romCard.innerHTML = `
         <div class="rom-content">
-          <h3 class="rom-name">${rom.name}</h3>
-          <span class="rom-version">${rom.version}</span>
-          <p class="rom-description">${rom.description}</p>
-          <div class="rom-details">
-            <div class="rom-detail">
-              <span class="material-icons">sd_card</span>
-              <span>${rom.size}</span>
-            </div>
-            <div class="rom-detail">
-              <span class="material-icons">calendar_today</span>
-              <span>${rom.date}</span>
-            </div>
-            <div class="rom-detail">
-              <span class="material-icons">update</span>
-              <span>${rom.lastUpdate || 'N/A'}</span>
-            </div>
-            <div class="rom-detail">
-              <span class="material-icons">person</span>
-              <span>${rom.developer}</span>
+          <div class="rom-info">
+            <h3 class="rom-name">${rom.name}</h3>
+            <span class="rom-version">${rom.version}</span>
+            <div class="rom-details">
+              <div class="rom-detail">
+                <span class="material-icons">sd_card</span>
+                <span>${rom.size}</span>
+              </div>
+              <div class="rom-detail">
+                <span class="material-icons">calendar_today</span>
+                <span>${rom.date}</span>
+              </div>
+              <div class="rom-detail">
+                <span class="material-icons">person</span>
+                <span>${rom.developer}</span>
+              </div>
             </div>
           </div>
         </div>
@@ -2314,8 +2381,6 @@
     setInterval(createOrb, 300);
 
     document.addEventListener('DOMContentLoaded', initializeApp);
-
-    // Feito com ♡ por Riq:)
   </script>
 </body>
 </html>

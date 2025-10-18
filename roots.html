@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ferramentas - Moto G34</title>
-  <link rel="icon" type="image/png" href="icontools.png">
+  <title>Roots - Moto G34</title>
+  <link rel="icon" type="image/png" href="icon.png">
   <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <style>
@@ -235,7 +235,6 @@
       border-radius: 50%;
       transition: all 0.3s ease;
       position: relative;
-      overflow: hidden;
     }
 
     .icon-button:hover {
@@ -265,29 +264,37 @@
       padding-right: 20px;
     }
 
-    .tools-header {
-      text-align: center;
-      margin-bottom: 3rem;
+    .rom-list {
       width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
     }
 
-    .tools-title {
+    .rom-list.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .rom-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .rom-title {
       font-size: 2.5rem;
-      font-weight: 700;
+      font-weight: bold;
       background: linear-gradient(45deg, var(--neon-blue), var(--neon-pink), var(--neon-purple));
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
-      margin-bottom: 1rem;
-      letter-spacing: -1px;
       text-shadow: 0 0 30px rgba(0, 217, 255, 0.3);
-    }
-
-    .tools-subtitle {
-      font-size: 1.2rem;
-      color: var(--text-secondary);
-      max-width: 800px;
-      margin: 0 auto;
     }
 
     .back-button {
@@ -303,7 +310,6 @@
       color: var(--text-light);
       cursor: pointer;
       transition: all 0.3s ease;
-      margin-bottom: 2rem;
     }
 
     .back-button:hover {
@@ -313,86 +319,161 @@
       transform: translateY(-3px);
     }
 
-    .tools-container {
-      width: 100%;
-      max-width: 1200px;
+    .rom-controls {
       display: flex;
-      flex-direction: column;
-      gap: 2rem;
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.5s ease, transform 0.5s ease;
-    }
-
-    .tools-container.show {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .tools-category {
-      width: 100%;
-      opacity: 0;
-      transform: translateY(20px);
-      animation: fadeInUp 0.5s ease forwards;
-    }
-
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .category-header {
-      display: flex;
+      justify-content: space-between;
       align-items: center;
+      margin-bottom: 2rem;
       gap: 1rem;
-      margin-bottom: 1.5rem;
+      width: 100%;
+      flex-wrap: wrap;
+    }
+
+    .search-container {
+      flex: 1;
+      position: relative;
+      max-width: 500px;
+      min-width: 250px;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 15px 20px 15px 50px;
+      border-radius: 50px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-light);
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .search-input:focus {
+      outline: none;
+      border-color: var(--neon-blue);
+      box-shadow: 0 0 15px rgba(0, 217, 255, 0.3);
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-secondary);
+      pointer-events: none;
+    }
+
+    .search-clear {
+      position: absolute;
+      right: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-secondary);
+      cursor: pointer;
+      display: none;
+    }
+
+    .search-clear.visible {
+      display: block;
+    }
+
+    .filter-dropdown {
       position: relative;
     }
 
-    .category-icon {
+    .filter-button {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 50px;
+      padding: 15px 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--text-light);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .filter-button:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: var(--neon-blue);
+      box-shadow: 0 0 15px rgba(0, 217, 255, 0.3);
+    }
+
+    .filter-menu {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      background: rgba(20, 20, 35, 0.95);
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      min-width: 200px;
+      z-index: 10;
+      margin-top: 10px;
+      display: none;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .filter-menu.active {
+      display: block;
+    }
+
+    .filter-option {
+      padding: 15px 20px;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .filter-option:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .view-toggle {
+      display: flex;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 50px;
+      overflow: hidden;
+    }
+
+    .view-button {
+      background: none;
+      border: none;
+      color: var(--text-secondary);
+      cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      background: rgba(255, 27, 45, 0.1);
-      color: var(--primary-color);
-      border: 1px solid rgba(255, 27, 45, 0.3);
+      width: 45px;
+      height: 45px;
+      transition: all 0.2s ease;
     }
 
-    .category-icon .material-icons {
-      font-size: 1.8rem;
-    }
-
-    .category-title {
-      font-size: 1.8rem;
-      font-weight: 600;
+    .view-button.active {
+      background: var(--primary-color);
       color: var(--text-light);
-      text-transform: uppercase;
-      letter-spacing: 1px;
     }
 
-    .category-divider {
-      height: 2px;
-      background: linear-gradient(90deg, var(--primary-color), transparent);
-      margin: 0 0 1.5rem 0;
-      border-radius: 1px;
+    .view-button:hover:not(.active) {
+      background: rgba(255, 255, 255, 0.1);
     }
 
-    .tools-cards {
+    .rom-cards {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
       gap: 30px;
+      transition: all 0.3s ease;
     }
 
-    .tool-card {
+    .rom-cards.list-view {
+      grid-template-columns: 1fr;
+    }
+
+    .rom-card {
       position: relative;
       background: linear-gradient(135deg, rgba(20, 20, 35, 0.9), rgba(30, 30, 50, 0.9));
       border-radius: 20px;
@@ -410,7 +491,15 @@
       clip-path: polygon(0 0, 100% 0, 100% 85%, 85% 100%, 0 100%);
     }
 
-    .tool-card.show {
+    .rom-cards.list-view .rom-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px;
+      clip-path: none;
+    }
+
+    .rom-card.show {
       animation: slideUp 0.6s ease forwards;
     }
 
@@ -421,7 +510,7 @@
       }
     }
 
-    .tool-card::before {
+    .rom-card::before {
       content: '';
       position: absolute;
       top: 0;
@@ -432,7 +521,7 @@
       border-radius: 4px 4px 0 0;
     }
 
-    .tool-card::after {
+    .rom-card::after {
       content: '';
       position: absolute;
       bottom: 0;
@@ -443,38 +532,26 @@
       clip-path: polygon(100% 0, 0 100%, 100% 100%);
     }
 
-    .tool-card:hover {
+    .rom-card:hover {
       transform: translateY(-10px) scale(1.02);
       box-shadow: 0 20px 40px rgba(0, 217, 255, 0.4);
       border-color: var(--neon-blue);
       background: linear-gradient(135deg, rgba(20, 20, 35, 0.95), rgba(40, 40, 60, 0.95));
     }
 
-    .tool-content {
+    .rom-content {
       padding: 25px;
       flex: 1;
       display: flex;
       flex-direction: column;
     }
 
-    .tool-icon {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      background: rgba(255, 27, 45, 0.1);
-      color: var(--primary-color);
-      margin-bottom: 1rem;
-      border: 1px solid rgba(255, 27, 45, 0.3);
+    .rom-cards.list-view .rom-content {
+      flex: 1;
+      padding: 0 20px;
     }
 
-    .tool-icon .material-icons {
-      font-size: 2rem;
-    }
-
-    .tool-name {
+    .rom-name {
       font-size: 1.5rem;
       font-weight: 600;
       color: var(--text-light);
@@ -483,7 +560,12 @@
       letter-spacing: 1px;
     }
 
-    .tool-version {
+    .rom-cards.list-view .rom-name {
+      font-size: 1.3rem;
+      margin-bottom: 0;
+    }
+
+    .rom-version {
       display: inline-block;
       background: rgba(255, 255, 255, 0.1);
       color: var(--primary-color);
@@ -495,7 +577,11 @@
       border: 1px solid rgba(255, 27, 45, 0.3);
     }
 
-    .tool-description {
+    .rom-cards.list-view .rom-version {
+      display: none;
+    }
+
+    .rom-description {
       font-size: 1rem;
       color: var(--text-secondary);
       margin-bottom: 20px;
@@ -503,14 +589,22 @@
       flex-grow: 1;
     }
 
-    .tool-details {
+    .rom-cards.list-view .rom-description {
+      display: none;
+    }
+
+    .rom-details {
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
       margin-bottom: 20px;
     }
 
-    .tool-detail {
+    .rom-cards.list-view .rom-details {
+      display: none;
+    }
+
+    .rom-detail {
       display: flex;
       align-items: center;
       gap: 5px;
@@ -521,15 +615,19 @@
       border-radius: 50px;
     }
 
-    .tool-detail .material-icons {
+    .rom-detail .material-icons {
       font-size: 1rem;
       color: var(--accent-color);
     }
 
-    .tool-actions {
+    .rom-actions {
       display: flex;
       gap: 10px;
       margin-top: auto;
+    }
+
+    .rom-cards.list-view .rom-actions {
+      margin-top: 0;
     }
 
     .favorite-button {
@@ -584,6 +682,13 @@
       letter-spacing: 1px;
     }
 
+    .rom-cards.list-view .download-button {
+      width: auto;
+      padding: 10px 15px;
+      font-size: 0.9rem;
+      flex: none;
+    }
+
     .download-button:hover {
       transform: translateY(-3px);
       box-shadow: 0 10px 25px rgba(255, 27, 45, 0.5);
@@ -636,6 +741,105 @@
       font-size: 1.8rem;
       margin-bottom: 1rem;
       color: var(--text-light);
+    }
+
+    .favorites-section {
+      display: none;
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-top: 2rem;
+    }
+
+    .favorites-section.show {
+      display: block;
+    }
+
+    .favorites-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+
+    .favorites-title {
+      font-size: 2.5rem;
+      font-weight: bold;
+      background: linear-gradient(45deg, var(--neon-blue), var(--neon-pink), var(--neon-purple));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .favorites-empty {
+      text-align: center;
+      padding: 3rem;
+      color: var(--text-secondary);
+    }
+
+    .favorites-empty .material-icons {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+      color: var(--primary-color);
+    }
+
+    .favorites-empty h3 {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+      color: var(--text-light);
+    }
+
+    .developer-group {
+      margin-bottom: 2rem;
+    }
+
+    .developer-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 1.5rem;
+      padding: 15px 20px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 15px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .developer-header .material-icons {
+      color: var(--primary-color);
+      font-size: 1.5rem;
+    }
+
+    .developer-name {
+      font-weight: 600;
+      color: var(--text-light);
+      font-size: 1.2rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .tutorial-button {
+      position: fixed;
+      bottom: 30px;
+      left: 30px;
+      background: linear-gradient(45deg, var(--secondary-color), var(--primary-color));
+      border: none;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      font-size: 1.5rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      box-shadow: 0 5px 20px rgba(114, 46, 209, 0.4);
+      z-index: 99;
+    }
+
+    .tutorial-button:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(114, 46, 209, 0.6);
     }
 
     .modal-overlay {
@@ -868,6 +1072,50 @@
       box-shadow: 0 10px 25px rgba(255, 27, 45, 0.5);
     }
 
+    .telegram-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: #0088cc;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .telegram-button:hover {
+      background: #0077b3;
+      transform: translateY(-2px);
+    }
+
+    .telegram-button .material-icons {
+      font-size: 1.2rem;
+    }
+
+    .android-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: #3DDC84;
+      color: #212121;
+      padding: 10px 20px;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .android-button:hover {
+      background: #2FB868;
+      transform: translateY(-2px);
+    }
+
+    .android-button .material-icons {
+      font-size: 1.2rem;
+    }
+
     .info-card {
       background: rgba(255, 255, 255, 0.05);
       border-radius: 15px;
@@ -1005,158 +1253,166 @@
       }
     }
 
-    .tutorial-tabs {
-      display: flex;
-      gap: 0.5rem;
-      margin-bottom: 1rem;
-      overflow-x: auto;
-      padding-bottom: 0.5rem;
-    }
-
-    .tutorial-tab {
-      padding: 0.5rem 1rem;
-      border-radius: 20px;
-      background: rgba(255, 255, 255, 0.05);
-      color: var(--text-secondary);
-      cursor: pointer;
-      transition: all 0.2s ease;
-      white-space: nowrap;
-      font-weight: 500;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .tutorial-tab.active {
-      background: rgba(255, 27, 45, 0.2);
-      color: var(--primary-color);
-      border-color: var(--primary-color);
-    }
-
-    .tutorial-content {
-      background: rgba(0, 0, 0, 0.2);
-      border-radius: 15px;
-      padding: 1rem;
-      white-space: pre-line;
-      font-family: 'Roboto Mono', monospace;
-      font-size: 0.9rem;
-      line-height: 1.5;
-      color: var(--text-secondary);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .tutorial-step {
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 12px;
-      padding: 1rem;
-      margin-bottom: 1rem;
-      border-left: 4px solid var(--primary-color);
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-    }
-
-    .tutorial-step-header {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      margin-bottom: 0.5rem;
-      font-weight: 500;
-      color: var(--primary-color);
-    }
-
-    .tutorial-step-content {
-      color: var(--text-secondary);
-      line-height: 1.5;
-      background: rgba(0, 0, 0, 0.2);
-      border-radius: 8px;
-      padding: 1rem;
-      margin-top: 0.5rem;
-      border-left: 3px solid var(--secondary-color);
-    }
-
-    .tutorial-code {
-      background: rgba(0, 0, 0, 0.3);
-      border-radius: 8px;
-      padding: 0.75rem;
-      margin-top: 0.5rem;
-      font-family: 'Roboto Mono', monospace;
-      font-size: 0.85rem;
-      color: var(--text-light);
-      overflow-x: auto;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .unavailable-message {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      background: rgba(255, 27, 45, 0.1);
-      color: var(--primary-color);
-      padding: 1rem;
-      border-radius: 8px;
-      margin-bottom: 1rem;
-      border: 1px solid rgba(255, 27, 45, 0.3);
-    }
-
-    .request-button {
-      background: linear-gradient(45deg, var(--secondary-color), var(--primary-color));
-      color: var(--text-light);
-      border: none;
-      border-radius: 8px;
-      padding: 0.5rem 1rem;
-      font-size: 0.9rem;
-      font-weight: 500;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      transition: all 0.2s ease;
-      margin-top: 1rem;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
-    .request-button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 5px 15px rgba(114, 46, 209, 0.3);
-    }
-
-    .form-group {
-      margin-bottom: 1.5rem;
-    }
-
-    .form-label {
-      display: block;
-      margin-bottom: 0.5rem;
-      font-weight: 500;
-      color: var(--text-light);
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
-    .form-input, .form-textarea {
+    .loader-container {
+      position: fixed;
+      top: 0;
+      left: 0;
       width: 100%;
-      padding: 0.75rem;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 8px;
-      background: rgba(255, 255, 255, 0.05);
-      color: var(--text-light);
-      font-family: 'Roboto', sans-serif;
-      font-size: 1rem;
-      transition: border-color 0.2s ease;
+      height: 100%;
+      background-color: rgba(10, 14, 26, 0.95);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
     }
 
-    .form-input:focus, .form-textarea:focus {
-      outline: none;
-      border-color: var(--neon-blue);
-      box-shadow: 0 0 10px rgba(0, 217, 255, 0.3);
+    .loader-container.active {
+      opacity: 1;
+      visibility: visible;
     }
 
-    .form-textarea {
-      min-height: 100px;
-      resize: vertical;
+    .loader {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      --color: var(--primary-color);
+      --animation: 2s ease-in-out infinite;
+    }
+
+    .loader .circle {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      width: 20px;
+      height: 20px;
+      border: solid 2px var(--color);
+      border-radius: 50%;
+      margin: 0 10px;
+      background-color: transparent;
+      animation: circle-keys var(--animation);
+    }
+
+    .loader .circle .dot {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background-color: var(--color);
+      animation: dot-keys var(--animation);
+    }
+
+    .loader .circle .outline {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      animation: outline-keys var(--animation);
+    }
+
+    .circle:nth-child(2) {
+      animation-delay: 0.3s;
+    }
+
+    .circle:nth-child(3) {
+      animation-delay: 0.6s;
+    }
+
+    .circle:nth-child(4) {
+      animation-delay: 0.9s;
+    }
+
+    .circle:nth-child(2) .dot {
+      animation-delay: 0.3s;
+    }
+
+    .circle:nth-child(3) .dot {
+      animation-delay: 0.6s;
+    }
+
+    .circle:nth-child(4) .dot {
+      animation-delay: 0.9s;
+    }
+
+    .circle:nth-child(1) .outline {
+      animation-delay: 0.9s;
+    }
+
+    .circle:nth-child(2) .outline {
+      animation-delay: 1.2s;
+    }
+
+    .circle:nth-child(3) .outline {
+      animation-delay: 1.5s;
+    }
+
+    .circle:nth-child(4) .outline {
+      animation-delay: 1.8s;
+    }
+
+    @keyframes circle-keys {
+      0% {
+        transform: scale(1);
+        opacity: 1;
+      }
+
+      50% {
+        transform: scale(1.5);
+        opacity: 0.5;
+      }
+
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    @keyframes dot-keys {
+      0% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(0);
+      }
+
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    @keyframes outline-keys {
+      0% {
+        transform: scale(0);
+        outline: solid 20px var(--color);
+        outline-offset: 0;
+        opacity: 1;
+      }
+
+      100% {
+        transform: scale(1);
+        outline: solid 0 transparent;
+        outline-offset: 20px;
+        opacity: 0;
+      }
     }
 
     @media (max-width: 768px) {
-      .tools-cards {
+      .rom-cards {
         grid-template-columns: 1fr;
+      }
+      
+      .rom-controls {
+        flex-direction: column;
+      }
+      
+      .search-container {
+        max-width: 100%;
       }
       
       .info-grid {
@@ -1176,13 +1432,21 @@
       .modal-section {
         padding: 15px;
       }
+      
+      .tutorial-button {
+        bottom: 15px;
+        left: 15px;
+        width: 50px;
+        height: 50px;
+        font-size: 1.2rem;
+      }
     }
   </style>
 </head>
 <body>
   <div class="page-title">
-    <span class="material-icons">build_circle</span>
-    <h1>Ferramentas</h1>
+    <span class="material-icons">security</span>
+    <h1>Roots</h1>
   </div>
 
   <button class="theme-picker" id="themePicker" aria-label="Escolher tema">
@@ -1208,10 +1472,31 @@
     </div>
   </div>
 
+  <div class="loader-container" id="loaderContainer">
+    <div class="loader">
+      <div class="circle">
+        <div class="dot"></div>
+        <div class="outline"></div>
+      </div>
+      <div class="circle">
+        <div class="dot"></div>
+        <div class="outline"></div>
+      </div>
+      <div class="circle">
+        <div class="dot"></div>
+        <div class="outline"></div>
+      </div>
+      <div class="circle">
+        <div class="dot"></div>
+        <div class="outline"></div>
+      </div>
+    </div>
+  </div>
+
   <div class="toolbar">
     <div class="logo">
-      <span class="material-icons">build_circle</span>
-      <h1>Ferramentas</h1>
+      <span class="material-icons">security</span>
+      <h1>Roots</h1>
     </div>
     <div class="toolbar-actions">
       <button class="icon-button" id="romsButton" aria-label="ROMs" title="ROMs">
@@ -1219,9 +1504,6 @@
       </button>
       <button class="icon-button" id="recoverysButton" aria-label="Recoverys" title="Recoverys">
         <span class="material-icons">settings_backup_restore</span>
-      </button>
-      <button class="icon-button" id="rootsButton" aria-label="Roots" title="Roots">
-        <span class="material-icons">security</span>
       </button>
       <button class="icon-button" id="gappsButton" aria-label="GApps" title="GApps">
         <span class="material-icons">apps</span>
@@ -1233,29 +1515,99 @@
   </div>
 
   <main>
-    <button class="back-button" id="backButton">
-      <span class="material-icons">arrow_back</span>
-      Voltar
-    </button>
-    
-    <div class="tools-header">
-      <h1 class="tools-title">Ferramentas para seu dispositivo!</h1>
-      <p class="tools-subtitle">Explore diversas ferramentas para maximizar o potencial do seu celular, desde otimização de sistema até personalização avançada.</p>
+    <div class="rom-list" id="romList">
+      <div class="rom-header">
+        <h2 class="rom-title" id="romTitle">Roots para Moto G34</h2>
+        <button class="back-button" id="backButton">
+          <span class="material-icons">arrow_back</span>
+          Voltar
+        </button>
+      </div>
+      
+      <div class="rom-controls">
+        <div class="search-container">
+          <span class="material-icons search-icon">search</span>
+          <input type="text" class="search-input" id="searchInput" placeholder="Buscar Roots...">
+          <span class="material-icons search-clear" id="searchClear">clear</span>
+        </div>
+        
+        <div class="filter-dropdown">
+          <button class="filter-button" id="filterButton">
+            <span class="material-icons">filter_list</span>
+            Filtrar
+          </button>
+          <div class="filter-menu" id="filterMenu">
+            <div class="filter-option" data-filter="all">
+              <span class="material-icons">apps</span>
+              Todos os Roots
+            </div>
+            <div class="filter-option" data-filter="favorites">
+              <span class="material-icons">favorite</span>
+              Favoritos
+            </div>
+            <div class="filter-option" data-filter="developer">
+              <span class="material-icons">person</span>
+              Por Desenvolvedor
+            </div>
+            <div class="filter-option" data-filter="date">
+              <span class="material-icons">calendar_today</span>
+              Por Data
+            </div>
+          </div>
+        </div>
+        
+        <div class="view-toggle">
+          <button class="view-button active" id="gridViewButton" title="Visualização em grade">
+            <span class="material-icons">grid_view</span>
+          </button>
+          <button class="view-button" id="listViewButton" title="Visualização em lista">
+            <span class="material-icons">view_list</span>
+          </button>
+        </div>
+      </div>
+      
+      <div class="loading" id="loading">
+        <span class="material-icons">refresh</span>
+        <p>Carregando Roots...</p>
+      </div>
+      
+      <div class="rom-cards" id="romCards">
+      </div>
     </div>
-    
-    <div class="loading" id="loading">
-      <span class="material-icons">refresh</span>
-      <p>Carregando ferramentas...</p>
-    </div>
-    
-    <div class="tools-container" id="toolsContainer">
+
+    <div class="favorites-section" id="favoritesSection">
+      <div class="favorites-header">
+        <h2 class="favorites-title">Meus Roots Favoritos</h2>
+        <button class="back-button" id="backFromFavorites">
+          <span class="material-icons">arrow_back</span>
+          Voltar
+        </button>
+      </div>
+      
+      <div class="loading" id="favoritesLoading">
+        <span class="material-icons">refresh</span>
+        <p>Carregando favoritos...</p>
+      </div>
+      
+      <div class="rom-cards" id="favoritesCards">
+      </div>
+      
+      <div class="favorites-empty" id="favoritesEmpty">
+        <span class="material-icons">favorite_border</span>
+        <h3>Nenhum Root favoritado</h3>
+        <p>Clique no ícone de coração em qualquer Root para adicioná-lo aos favoritos.</p>
+      </div>
     </div>
   </main>
+
+  <button class="tutorial-button" id="tutorialButton">
+    <span class="material-icons">help_outline</span>
+  </button>
 
   <div class="modal-overlay" id="modalOverlay">
     <div class="modal">
       <div class="modal-header">
-        <h3 class="modal-title" id="modalTitle">Informações da Ferramenta</h3>
+        <h3 class="modal-title" id="modalTitle">Informações do Root</h3>
         <button class="modal-close" id="modalClose">
           <span class="material-icons">close</span>
         </button>
@@ -1264,18 +1616,17 @@
       <div class="modal-body">
         <div class="modal-tabs" id="modalTabs">
           <div class="modal-tab active" data-tab="details">Detalhes</div>
-          <div class="modal-tab" data-tab="tutorial">Tutorial</div>
+          <div class="modal-tab" data-tab="source">Fonte</div>
         </div>
         
         <div class="modal-tab-content active" id="details-tab">
           <div class="info-grid">
             <div class="info-card">
               <div class="info-card-title">
-                <span class="material-icons">build</span>
+                <span class="material-icons">security</span>
                 Versão
               </div>
-              <div class="info-card-content" id="toolVersion">
-                1.0.0
+              <div class="info-card-content" id="romVersion">
               </div>
             </div>
             
@@ -1284,8 +1635,7 @@
                 <span class="material-icons">person</span>
                 Desenvolvedor
               </div>
-              <div class="info-card-content" id="toolDeveloper">
-                Riq:)
+              <div class="info-card-content" id="romDeveloper">
               </div>
             </div>
             
@@ -1294,17 +1644,7 @@
                 <span class="material-icons">update</span>
                 Última Atualização
               </div>
-              <div class="info-card-content" id="toolLastUpdate">
-                01 de Outubro
-              </div>
-            </div>
-            
-            <div class="info-card">
-              <div class="info-card-title">
-                <span class="material-icons">sd_card</span>
-                Tamanho
-              </div>
-              <div class="info-card-content" id="toolSize">
+              <div class="info-card-content" id="romLastUpdate">
               </div>
             </div>
           </div>
@@ -1314,7 +1654,7 @@
               <span class="material-icons">description</span>
               Descrição
             </div>
-            <div class="info-card-description-content" id="toolDescription">
+            <div class="info-card-description-content" id="romDescription">
             </div>
           </div>
           
@@ -1344,17 +1684,24 @@
             <ul class="modal-list" id="notes">
             </ul>
           </div>
+          
+          <div class="modal-section" id="creditsSection">
+            <h4 class="modal-section-title">
+              <span class="material-icons">emoji_events</span>
+              Créditos
+            </h4>
+            <ul class="modal-list" id="credits">
+            </ul>
+          </div>
         </div>
         
-        <div class="modal-tab-content" id="tutorial-tab">
+        <div class="modal-tab-content" id="source-tab">
           <div class="modal-section">
             <h4 class="modal-section-title">
-              <span class="material-icons">school</span>
-              Tutorial de Uso
+              <span class="material-icons">link</span>
+              Fonte do Root
             </h4>
-            <div class="tutorial-tabs" id="tutorialTabs">
-            </div>
-            <div class="tutorial-content" id="tutorialContent">
+            <div id="sourceLink">
             </div>
           </div>
         </div>
@@ -1367,51 +1714,76 @@
         </button>
         <button class="modal-button modal-button-primary" id="confirmButton">
           <span class="material-icons">download</span>
-          Baixar Ferramenta
+          Baixar Root
         </button>
       </div>
     </div>
   </div>
 
-  <div class="modal-overlay" id="requestModalOverlay">
+  <div class="modal-overlay" id="tutorialModalOverlay">
     <div class="modal">
       <div class="modal-header">
-        <h3 class="modal-title">Solicitar Versão</h3>
-        <button class="modal-close" id="requestModalClose">
+        <h3 class="modal-title">Como Fazer Root</h3>
+        <button class="modal-close" id="tutorialModalClose">
           <span class="material-icons">close</span>
         </button>
       </div>
       
       <div class="modal-body">
-        <form id="requestForm">
-          <div class="form-group">
-            <label class="form-label" for="requestName">Seu Nome (Opcional)</label>
-            <input type="text" class="form-input" id="requestName" placeholder="Deixe em branco para enviar anonimamente">
-          </div>
-          
-          <div class="form-group">
-            <label class="form-label" for="requestEmail">Seu E-mail (Opcional)</label>
-            <input type="email" class="form-input" id="requestEmail" placeholder="Para receber notificações sobre o andamento">
-          </div>
-          
-          <div class="form-group">
-            <label class="form-label" for="requestMessage">Mensagem (Opcional)</label>
-            <textarea class="form-textarea" id="requestMessage" placeholder="Alguma informação adicional que você gostaria de compartilhar"></textarea>
-          </div>
-          
-          <input type="hidden" id="requestTool" name="tool">
-          <input type="hidden" id="requestPlatform" name="platform">
-        </form>
+        <div class="modal-section">
+          <h4 class="modal-section-title">
+            <span class="material-icons">warning</span>
+            Aviso Importante
+          </h4>
+          <p>Fazer root no seu dispositivo pode anular a garantia e pode causar instabilidade no sistema. Não somos responsáveis por quaisquer danos causados ao seu dispositivo. Prossiga com cuidado e sempre faça backup dos seus dados importantes antes de prosseguir.</p>
+        </div>
+        
+        <div class="modal-section">
+          <h4 class="modal-section-title">
+            <span class="material-icons">list_alt</span>
+            Pré-requisitos
+          </h4>
+          <ul class="modal-list">
+            <li>Bootloader desbloqueado</li>
+            <li>Bateria com pelo menos 50% de carga</li>
+            <li>Faça backup dos seus dados importantes</li>
+            <li>Ative a opção "Depuração USB" nas opções do desenvolvedor</li>
+          </ul>
+        </div>
+        
+        <div class="modal-section">
+          <h4 class="modal-section-title">
+            <span class="material-icons">build</span>
+            Instruções de Instalação
+          </h4>
+          <ol class="modal-list" style="list-style-type: decimal;">
+            <li>Baixe a solução de root desejada</li>
+            <li>Se necessário, instale um recovery personalizado (como TWRP)</li>
+            <li>Transfira o arquivo do root para o seu dispositivo</li>
+            <li>Reinicie no modo recovery</li>
+            <li>Instale o arquivo do root através do recovery</li>
+            <li>Reinicie o dispositivo</li>
+            <li>Verifique se o root foi aplicado corretamente usando um aplicativo como o Root Checker</li>
+          </ol>
+        </div>
+        
+        <div class="modal-section">
+          <h4 class="modal-section-title">
+            <span class="material-icons">help_outline</span>
+            Solução de Problemas
+          </h4>
+          <ul class="modal-list">
+            <li>Se o dispositivo não iniciar após o root, tente reinstalar o recovery</li>
+            <li>Se encontrar erros durante a instalação, verifique se o arquivo foi baixado corretamente</li>
+            <li>Para problemas específicos, consulte a fonte do root para obter suporte</li>
+          </ul>
+        </div>
       </div>
       
       <div class="modal-footer">
-        <button class="modal-button modal-button-secondary" id="requestCancelButton">
-          <span class="material-icons">close</span>
-          Cancelar
-        </button>
-        <button class="modal-button modal-button-primary" id="requestSubmitButton">
-          <span class="material-icons">send</span>
-          Enviar Solicitação
+        <button class="modal-button modal-button-primary" id="tutorialModalConfirm">
+          <span class="material-icons">check</span>
+          Entendido
         </button>
       </div>
     </div>
@@ -1428,20 +1800,30 @@
     </button>
   </div>
 
-  <script src="tools-data.js"></script>
+  <script src="roots-data.js"></script>
+  <script src="colors.js"></script>
   
   <script>
-    const toolsContainer = document.getElementById('toolsContainer');
+    const romList = document.getElementById('romList');
+    const romCards = document.getElementById('romCards');
+    const favoritesSection = document.getElementById('favoritesSection');
+    const favoritesCards = document.getElementById('favoritesCards');
+    const favoritesEmpty = document.getElementById('favoritesEmpty');
+    const favoritesLoading = document.getElementById('favoritesLoading');
     const loading = document.getElementById('loading');
     const backButton = document.getElementById('backButton');
-    const themeToggle = document.getElementById('themeToggle');
-    const romsButton = document.getElementById('romsButton');
-    const recoverysButton = document.getElementById('recoverysButton');
-    const rootsButton = document.getElementById('rootsButton');
-    const gappsButton = document.getElementById('gappsButton');
+    const backFromFavorites = document.getElementById('backFromFavorites');
     const notification = document.getElementById('notification');
+    const tutorialButton = document.getElementById('tutorialButton');
+    const searchInput = document.getElementById('searchInput');
+    const searchClear = document.getElementById('searchClear');
+    const gridViewButton = document.getElementById('gridViewButton');
+    const listViewButton = document.getElementById('listViewButton');
+    const filterButton = document.getElementById('filterButton');
+    const filterMenu = document.getElementById('filterMenu');
     const themePicker = document.getElementById('themePicker');
     const themeOptions = document.getElementById('themeOptions');
+    const loaderContainer = document.getElementById('loaderContainer');
     
     const modalOverlay = document.getElementById('modalOverlay');
     const modalClose = document.getElementById('modalClose');
@@ -1450,30 +1832,32 @@
     const modalTabContents = document.querySelectorAll('.modal-tab-content');
     const cancelButton = document.getElementById('cancelButton');
     const confirmButton = document.getElementById('confirmButton');
-    const tutorialTabs = document.getElementById('tutorialTabs');
-    const tutorialContent = document.getElementById('tutorialContent');
     
-    const requestModalOverlay = document.getElementById('requestModalOverlay');
-    const requestModalClose = document.getElementById('requestModalClose');
-    const requestCancelButton = document.getElementById('requestCancelButton');
-    const requestSubmitButton = document.getElementById('requestSubmitButton');
-    const requestForm = document.getElementById('requestForm');
-    const requestTool = document.getElementById('requestTool');
-    const requestPlatform = document.getElementById('requestPlatform');
+    const tutorialModalOverlay = document.getElementById('tutorialModalOverlay');
+    const tutorialModalClose = document.getElementById('tutorialModalClose');
+    const tutorialModalConfirm = document.getElementById('tutorialModalConfirm');
     
     let settings = {
-      theme: 'dark',
-      primaryColor: '#FF1B2D',
-      animationsEnabled: true,
+      viewMode: 'grid',
       notificationsEnabled: true,
       lastUpdateSeen: null
     };
 
-    let currentTool = null;
-    let allTools = [];
+    let currentRom = null;
+    let allRoms = [];
     let favorites = [];
+    let currentFilter = 'all';
     let currentDevice = '';
-    let currentPlatform = '';
+
+    function showLoader() {
+      loaderContainer.classList.add('active');
+    }
+
+    function hideLoader() {
+      setTimeout(() => {
+        loaderContainer.classList.remove('active');
+      }, 500);
+    }
 
     function initializeApp() {
       loadSettings();
@@ -1483,7 +1867,9 @@
       const urlParams = new URLSearchParams(window.location.search);
       currentDevice = urlParams.get('device') || 'motog34';
       
-      loadTools();
+      document.getElementById('romTitle').textContent = `Roots para ${currentDevice.charAt(0).toUpperCase() + currentDevice.slice(1)}`;
+      
+      loadRoots();
     }
 
     function setupEventListeners() {
@@ -1491,22 +1877,48 @@
         window.location.href = 'index.html';
       });
 
-      themeToggle.addEventListener('click', toggleTheme);
-
-      romsButton.addEventListener('click', function() {
-        window.location.href = `roms.html?device=${currentDevice}`;
+      backFromFavorites.addEventListener('click', function() {
+        showRomList();
       });
 
-      recoverysButton.addEventListener('click', function() {
-        window.location.href = `recovery.html?device=${currentDevice}`;
+      tutorialButton.addEventListener('click', function() {
+        tutorialModalOverlay.classList.add('active');
       });
 
-      rootsButton.addEventListener('click', function() {
-        window.location.href = `roots.html?device=${currentDevice}`;
+      searchInput.addEventListener('input', function() {
+        const value = this.value;
+        if (value) {
+          searchClear.classList.add('visible');
+        } else {
+          searchClear.classList.remove('visible');
+        }
+        filterRoms(value);
       });
 
-      gappsButton.addEventListener('click', function() {
-        window.location.href = `gapps.html?device=${currentDevice}`;
+      searchClear.addEventListener('click', function() {
+        searchInput.value = '';
+        searchClear.classList.remove('visible');
+        filterRoms('');
+      });
+
+      filterButton.addEventListener('click', function() {
+        filterMenu.classList.toggle('active');
+      });
+
+      document.querySelectorAll('.filter-option').forEach(option => {
+        option.addEventListener('click', function() {
+          const filter = this.getAttribute('data-filter');
+          applyFilter(filter);
+          filterMenu.classList.remove('active');
+        });
+      });
+
+      gridViewButton.addEventListener('click', function() {
+        setViewMode('grid');
+      });
+
+      listViewButton.addEventListener('click', function() {
+        setViewMode('list');
       });
 
       themePicker.addEventListener('click', function() {
@@ -1527,11 +1939,7 @@
 
       modalClose.addEventListener('click', closeModal);
       cancelButton.addEventListener('click', closeModal);
-      confirmButton.addEventListener('click', downloadTool);
-      
-      requestModalClose.addEventListener('click', closeRequestModal);
-      requestCancelButton.addEventListener('click', closeRequestModal);
-      requestSubmitButton.addEventListener('click', submitRequest);
+      confirmButton.addEventListener('click', confirmDownload);
       
       modalTabs.forEach(tab => {
         tab.addEventListener('click', function() {
@@ -1540,130 +1948,177 @@
         });
       });
       
+      tutorialModalClose.addEventListener('click', function() {
+        tutorialModalOverlay.classList.remove('active');
+      });
+      
+      tutorialModalConfirm.addEventListener('click', function() {
+        tutorialModalOverlay.classList.remove('active');
+      });
+      
       modalOverlay.addEventListener('click', function(e) {
         if (e.target === modalOverlay) {
           closeModal();
         }
       });
       
-      requestModalOverlay.addEventListener('click', function(e) {
-        if (e.target === requestModalOverlay) {
-          closeRequestModal();
+      tutorialModalOverlay.addEventListener('click', function(e) {
+        if (e.target === tutorialModalOverlay) {
+          tutorialModalOverlay.classList.remove('active');
         }
       });
 
       document.addEventListener('click', function(e) {
+        if (!filterButton.contains(e.target) && !filterMenu.contains(e.target)) {
+          filterMenu.classList.remove('active');
+        }
         if (!themePicker.contains(e.target) && !themeOptions.contains(e.target)) {
           themeOptions.classList.remove('active');
         }
       });
     }
 
-    function loadTools() {
+    function loadRoots() {
       loading.classList.add('show');
-      toolsContainer.innerHTML = '';
+      romCards.innerHTML = '';
       
       setTimeout(() => {
         loading.classList.remove('show');
         
-        allTools = getToolsByDevice(currentDevice);
+        allRoms = getRootsByDevice(currentDevice);
         
-        if (allTools.length === 0) {
-          toolsContainer.innerHTML = `
+        if (allRoms.length === 0) {
+          romCards.innerHTML = `
             <div class="no-results">
               <span class="material-icons">search_off</span>
-              <h3>Nenhuma ferramenta encontrada</h3>
-              <p>Não há ferramentas disponíveis para este dispositivo no momento.</p>
+              <h3>Nenhum Root encontrado</h3>
+              <p>Não há Roots disponíveis para este dispositivo no momento.</p>
             </div>
           `;
         } else {
-          displayTools();
+          applyFilter(currentFilter);
         }
         
         setTimeout(() => {
-          toolsContainer.classList.add('show');
+          romList.classList.add('show');
         }, 100);
       }, 300);
     }
 
-    function displayTools() {
-      toolsContainer.innerHTML = '';
+    function showFavorites() {
+      romList.style.display = 'none';
+      favoritesSection.style.display = 'block';
+      tutorialButton.style.display = 'none';
       
-      const categories = {};
+      favoritesLoading.classList.add('show');
+      favoritesCards.innerHTML = '';
+      favoritesEmpty.style.display = 'none';
       
-      allTools.forEach(tool => {
-        if (!categories[tool.category]) {
-          categories[tool.category] = {
-            name: tool.category,
-            icon: tool.categoryIcon,
-            tools: []
-          };
-        }
-        categories[tool.category].tools.push(tool);
-      });
-      
-      Object.values(categories).forEach((category, categoryIndex) => {
-        const categorySection = document.createElement('div');
-        categorySection.className = 'tools-category';
-        categorySection.style.animationDelay = `${categoryIndex * 0.2}s`;
+      setTimeout(() => {
+        favoritesLoading.classList.remove('show');
         
-        categorySection.innerHTML = `
-          <div class="category-header">
-            <div class="category-icon">
-              <span class="material-icons">${category.icon}</span>
-            </div>
-            <h2 class="category-title">${category.name}</h2>
-          </div>
-          <div class="category-divider"></div>
-          <div class="tools-cards" id="category-${categoryIndex}">
+        if (favorites.length === 0) {
+          favoritesEmpty.style.display = 'block';
+        } else {
+          displayRoms(favorites, favoritesCards);
+        }
+        
+        setTimeout(() => {
+          favoritesSection.classList.add('show');
+        }, 100);
+      }, 300);
+    }
+
+    function showRomList() {
+      favoritesSection.classList.remove('show');
+      romList.style.display = 'block';
+      tutorialButton.style.display = 'flex';
+    }
+
+    function displayRoms(roms, container = romCards) {
+      container.innerHTML = '';
+      
+      if (roms.length === 0) {
+        container.innerHTML = `
+          <div class="no-results">
+            <span class="material-icons">search_off</span>
+            <h3>Nenhum Root encontrado</h3>
+            <p>Não há Roots correspondentes à sua busca.</p>
           </div>
         `;
-        
-        toolsContainer.appendChild(categorySection);
-        
-        const toolsCards = document.getElementById(`category-${categoryIndex}`);
-        
-        category.tools.forEach((tool, toolIndex) => {
-          const toolCard = createToolCard(tool, toolIndex);
-          toolsCards.appendChild(toolCard);
-        });
+        return;
+      }
+      
+      roms.forEach((rom, index) => {
+        if (rom.isDeveloperGroup) {
+          const developerGroup = document.createElement('div');
+          developerGroup.className = 'developer-group';
+          
+          const developerHeader = document.createElement('div');
+          developerHeader.className = 'developer-header';
+          developerHeader.innerHTML = `
+            <span class="material-icons">person</span>
+            <span class="developer-name">${rom.developer}</span>
+          `;
+          
+          developerGroup.appendChild(developerHeader);
+          
+          const romsContainer = document.createElement('div');
+          romsContainer.className = 'rom-cards';
+          
+          rom.roms.forEach((devRom, devIndex) => {
+            const romCard = createRomCard(devRom, devIndex);
+            romsContainer.appendChild(romCard);
+          });
+          
+          developerGroup.appendChild(romsContainer);
+          container.appendChild(developerGroup);
+        } else {
+          const romCard = createRomCard(rom, index);
+          container.appendChild(romCard);
+        }
       });
     }
 
-    function createToolCard(tool, index) {
-      const toolCard = document.createElement('div');
-      toolCard.className = 'tool-card';
+    function createRomCard(rom, index) {
+      const romCard = document.createElement('div');
+      romCard.className = 'rom-card';
       
-      const isFavorite = favorites.some(fav => fav.name === tool.name && fav.developer === tool.developer);
+      if (rom.easterEgg) {
+        romCard.classList.add('easter-egg');
+      }
       
-      toolCard.innerHTML = `
-        <div class="tool-content">
-          <div class="tool-icon">
-            <span class="material-icons">${tool.icon || 'code'}</span>
-          </div>
-          <h3 class="tool-name">${tool.name}</h3>
-          <span class="tool-version">1.0.0</span>
-          <p class="tool-description">${tool.description}</p>
-          <div class="tool-details">
-            <div class="tool-detail">
+      const isFavorite = favorites.some(fav => fav.name === rom.name && fav.developer === rom.developer);
+      
+      romCard.innerHTML = `
+        <div class="rom-content">
+          <h3 class="rom-name">${rom.name}</h3>
+          <span class="rom-version">${rom.version}</span>
+          <p class="rom-description">${rom.description}</p>
+          <div class="rom-details">
+            <div class="rom-detail">
               <span class="material-icons">sd_card</span>
-              <span>${tool.size}</span>
+              <span>${rom.size}</span>
             </div>
-            <div class="tool-detail">
+            <div class="rom-detail">
               <span class="material-icons">calendar_today</span>
-              <span>01 de Outubro</span>
+              <span>${rom.date}</span>
             </div>
-            <div class="tool-detail">
+            <div class="rom-detail">
+              <span class="material-icons">update</span>
+              <span>${rom.lastUpdate || 'N/A'}</span>
+            </div>
+            <div class="rom-detail">
               <span class="material-icons">person</span>
-              <span>Riq:)</span>
+              <span>${rom.developer}</span>
             </div>
           </div>
         </div>
-        <div class="tool-actions">
-          <button class="favorite-button ${isFavorite ? 'active' : ''}" data-tool-name="${tool.name}" data-tool-dev="${tool.developer}">
+        <div class="rom-actions">
+          <button class="favorite-button ${isFavorite ? 'active' : ''}" data-rom-name="${rom.name}" data-rom-dev="${rom.developer}">
             <span class="material-icons">${isFavorite ? 'favorite' : 'favorite_border'}</span>
           </button>
-          <button class="download-button" data-tool-index="${index}">
+          <button class="download-button" data-rom-index="${index}">
             <span class="material-icons">download</span>
             Download
           </button>
@@ -1671,239 +2126,176 @@
       `;
       
       setTimeout(() => {
-        toolCard.classList.add('show');
+        romCard.classList.add('show');
       }, index * 100);
       
-      const favoriteButton = toolCard.querySelector('.favorite-button');
-      favoriteButton.addEventListener('click', function() {
-        const toolName = this.getAttribute('data-tool-name');
-        const toolDev = this.getAttribute('data-tool-dev');
-        toggleFavorite(toolName, toolDev, this);
+      romCard.querySelector('.favorite-button').addEventListener('click', function() {
+        const romName = this.getAttribute('data-rom-name');
+        const romDev = this.getAttribute('data-rom-dev');
+        toggleFavorite(romName, romDev, this);
       });
       
-      toolCard.querySelector('.download-button').addEventListener('click', function() {
-        const toolIndex = this.getAttribute('data-tool-index');
-        const selectedTool = allTools.find(t => t.name === tool.name && t.developer === tool.developer);
-        showToolDetails(selectedTool);
+      romCard.querySelector('.download-button').addEventListener('click', function() {
+        const romIndex = this.getAttribute('data-rom-index');
+        const selectedRom = rom.isDeveloperGroup ? rom.roms[romIndex] : rom;
+        showRomDetails(selectedRom);
       });
       
-      return toolCard;
+      return romCard;
     }
 
-    function toggleFavorite(toolName, toolDev, buttonElement) {
-      const index = favorites.findIndex(fav => fav.name === toolName && fav.developer === toolDev);
+    function toggleFavorite(romName, romDev, buttonElement) {
+      const index = favorites.findIndex(fav => fav.name === romName && fav.developer === romDev);
       
       if (index === -1) {
-        const tool = allTools.find(t => t.name === toolName && t.developer === toolDev);
-        if (tool) {
+        const rom = allRoms.find(r => r.name === romName && r.developer === romDev);
+        if (rom) {
           favorites.push({
-            name: tool.name,
-            developer: tool.developer,
-            version: tool.version,
-            description: tool.description,
-            size: tool.size,
-            date: tool.date,
-            lastUpdate: tool.lastUpdate,
-            url: tool.url,
-            downloads: tool.downloads,
-            supportedSystems: tool.supportedSystems,
-            details: tool.details,
-            source: tool.source,
-            icon: tool.icon,
-            category: tool.category,
-            categoryIcon: tool.categoryIcon,
-            tutorial: tool.tutorial,
-            unavailable: tool.unavailable
+            name: rom.name,
+            developer: rom.developer,
+            version: rom.version,
+            description: rom.description,
+            size: rom.size,
+            date: rom.date,
+            lastUpdate: rom.lastUpdate,
+            url: rom.url,
+            details: rom.details,
+            source: rom.source,
+            easterEgg: rom.easterEgg || false
           });
-          showNotification('Adicionado aos Favoritos', `${toolName} foi adicionado aos seus favoritos.`);
+          showNotification('Adicionado aos Favoritos', `${romName} foi adicionado aos seus favoritos.`);
           
-          buttonElement.classList.add('active');
-          buttonElement.querySelector('.material-icons').textContent = 'favorite';
+          if (buttonElement) {
+            buttonElement.classList.add('active');
+            buttonElement.querySelector('.material-icons').textContent = 'favorite';
+          }
         }
       } else {
         favorites.splice(index, 1);
-        showNotification('Removido dos Favoritos', `${toolName} foi removido dos seus favoritos.`);
+        showNotification('Removido dos Favoritos', `${romName} foi removido dos seus favoritos.`);
         
-        buttonElement.classList.remove('active');
-        buttonElement.querySelector('.material-icons').textContent = 'favorite_border';
+        if (buttonElement) {
+          buttonElement.classList.remove('active');
+          buttonElement.querySelector('.material-icons').textContent = 'favorite_border';
+        }
       }
       
       saveFavorites();
+      
+      if (currentFilter === 'favorites') {
+        applyFilter('favorites');
+      } else {
+        applyFilter(currentFilter);
+      }
     }
 
-    function showToolDetails(tool) {
-      currentTool = tool;
+    function applyFilter(filter) {
+      currentFilter = filter;
       
-      modalTitle.textContent = tool.name;
+      let filteredRoms = [];
       
-      document.getElementById('toolVersion').textContent = '1.0.0';
-      document.getElementById('toolDeveloper').textContent = 'Riq:)';
-      document.getElementById('toolLastUpdate').textContent = '01 de Outubro';
-      document.getElementById('toolSize').textContent = tool.size;
-      document.getElementById('toolDescription').textContent = tool.details.description;
+      switch (filter) {
+        case 'all':
+          filteredRoms = allRoms;
+          break;
+        case 'favorites':
+          filteredRoms = favorites;
+          break;
+        case 'developer':
+          const developers = [...new Set(allRoms.map(rom => rom.developer).filter(dev => dev && dev.trim() !== ''))];
+          filteredRoms = developers.map(dev => ({
+            isDeveloperGroup: true,
+            developer: dev,
+            roms: allRoms.filter(rom => rom.developer === dev)
+          }));
+          break;
+        case 'date':
+          filteredRoms = [...allRoms].sort((a, b) => {
+            const dateA = new Date(a.date.split('/').reverse().join('/'));
+            const dateB = new Date(b.date.split('/').reverse().join('/'));
+            return dateB - dateA;
+          });
+          break;
+        default:
+          filteredRoms = allRoms;
+      }
       
-      const changelogHtml = tool.details.changelog.map(item => `<li>${item}</li>`).join('');
+      displayRoms(filteredRoms);
+    }
+
+    function filterRoms(searchTerm) {
+      if (!searchTerm) {
+        applyFilter(currentFilter);
+        return;
+      }
+      
+      let romsToFilter = currentFilter === 'favorites' ? favorites : allRoms;
+      
+      const filteredRoms = romsToFilter.filter(rom => {
+        const term = searchTerm.toLowerCase();
+        return (
+          rom.name.toLowerCase().includes(term) ||
+          rom.version.toLowerCase().includes(term) ||
+          rom.description.toLowerCase().includes(term) ||
+          rom.developer.toLowerCase().includes(term)
+        );
+      });
+      
+      displayRoms(filteredRoms);
+    }
+
+    function setViewMode(mode) {
+      settings.viewMode = mode;
+      saveSettings();
+      
+      if (mode === 'grid') {
+        romCards.classList.remove('list-view');
+        gridViewButton.classList.add('active');
+        listViewButton.classList.remove('active');
+      } else {
+        romCards.classList.add('list-view');
+        gridViewButton.classList.remove('active');
+        listViewButton.classList.add('active');
+      }
+    }
+
+    function showRomDetails(rom) {
+      currentRom = rom;
+      
+      modalTitle.textContent = rom.name;
+      
+      document.getElementById('romVersion').textContent = rom.details.version;
+      document.getElementById('romDeveloper').textContent = rom.details.dev;
+      document.getElementById('romLastUpdate').textContent = rom.lastUpdate || 'N/A';
+      document.getElementById('romDescription').textContent = rom.details.description;
+      
+      const changelogHtml = rom.details.changelog.map(item => `<li>${item}</li>`).join('');
       document.getElementById('changelog').innerHTML = changelogHtml || '<li>Nenhuma alteração recente</li>';
       
-      document.getElementById('changelogSection').style.display = tool.details.changelog.length > 0 ? 'block' : 'none';
+      document.getElementById('changelogSection').style.display = rom.details.changelog.length > 0 ? 'block' : 'none';
       
-      const issuesHtml = tool.details.knownIssues.map(item => `<li>${item}</li>`).join('');
+      const issuesHtml = rom.details.knownIssues.map(item => `<li>${item}</li>`).join('');
       document.getElementById('knownIssues').innerHTML = issuesHtml || '<li>Nenhum problema conhecido</li>';
       
-      document.getElementById('knownIssuesSection').style.display = tool.details.knownIssues.length > 0 ? 'block' : 'none';
+      document.getElementById('knownIssuesSection').style.display = rom.details.knownIssues.length > 0 ? 'block' : 'none';
       
-      const notesHtml = tool.details.notes.map(item => `<li>${item}</li>`).join('');
+      const notesHtml = rom.details.notes.map(item => `<li>${item}</li>`).join('');
       document.getElementById('notes').innerHTML = notesHtml || '<li>Nenhuma nota adicional</li>';
       
-      document.getElementById('notesSection').style.display = tool.details.notes.length > 0 ? 'block' : 'none';
+      document.getElementById('notesSection').style.display = rom.details.notes.length > 0 ? 'block' : 'none';
       
-      setupTutorialTabs(tool);
+      if (rom.details.credits) {
+        const creditsHtml = rom.details.credits.map(item => `<li>${item}</li>`).join('');
+        document.getElementById('credits').innerHTML = creditsHtml;
+        document.getElementById('creditsSection').style.display = 'block';
+      } else {
+        document.getElementById('creditsSection').style.display = 'none';
+      }
+      
+      let sourceHtml = `<a href="${rom.source}" target="_blank" class="telegram-button"><span class="material-icons">send</span> Acessar</a>`;
+      document.getElementById('sourceLink').innerHTML = sourceHtml;
       
       modalOverlay.classList.add('active');
-    }
-
-    function setupTutorialTabs(tool) {
-      tutorialTabs.innerHTML = '';
-      
-      tool.supportedSystems.forEach(system => {
-        const tab = document.createElement('div');
-        tab.className = 'tutorial-tab';
-        tab.setAttribute('data-tutorial', system);
-        tab.textContent = system;
-        
-        if (system === tool.supportedSystems[0]) {
-          tab.classList.add('active');
-          showTutorialContent(tool, system);
-        }
-        
-        tab.addEventListener('click', function() {
-          document.querySelectorAll('[data-tutorial]').forEach(t => t.classList.remove('active'));
-          this.classList.add('active');
-          showTutorialContent(tool, system);
-        });
-        
-        tutorialTabs.appendChild(tab);
-      });
-    }
-
-    function showTutorialContent(tool, system) {
-      currentPlatform = system;
-      
-      if (tool.unavailable && tool.unavailable.includes(system)) {
-        tutorialContent.innerHTML = `
-          <div class="unavailable-message">
-            <span class="material-icons">error</span>
-            <span>Este script ainda não tem uma versão para ${system}! :( Se quiser, solicite uma versão aqui embaixo!</span>
-          </div>
-          <button class="request-button" id="requestVersionButton">
-            <span class="material-icons">send</span>
-            Solicitar Versão
-          </button>
-        `;
-        
-        document.getElementById('requestVersionButton').addEventListener('click', function() {
-          openRequestModal(tool, system);
-        });
-      } else {
-        const tutorialText = tool.tutorial[system];
-        const steps = parseTutorialSteps(tutorialText);
-        
-        let tutorialHtml = '';
-        steps.forEach((step, index) => {
-          tutorialHtml += `
-            <div class="tutorial-step">
-              <div class="tutorial-step-header">
-                <span class="material-icons">looks_one</span>
-                <span>Passo ${index + 1}</span>
-              </div>
-              <div class="tutorial-step-content">${step.content}</div>
-              ${step.code ? `<div class="tutorial-code">${step.code}</div>` : ''}
-            </div>
-          `;
-        });
-        
-        tutorialContent.innerHTML = tutorialHtml;
-      }
-    }
-
-    function parseTutorialSteps(tutorialText) {
-      const lines = tutorialText.split('\n');
-      const steps = [];
-      let currentStep = { content: '', code: '' };
-      let inCodeBlock = false;
-      
-      lines.forEach(line => {
-        if (line.startsWith('```')) {
-          inCodeBlock = !inCodeBlock;
-          if (!inCodeBlock && currentStep.code) {
-            steps.push({...currentStep});
-            currentStep = { content: '', code: '' };
-          }
-        } else if (inCodeBlock) {
-          currentStep.code += line + '\n';
-        } else if (line.trim() === '') {
-          if (currentStep.content) {
-            steps.push({...currentStep});
-            currentStep = { content: '', code: '' };
-          }
-        } else {
-          currentStep.content += line + '\n';
-        }
-      });
-      
-      if (currentStep.content || currentStep.code) {
-        steps.push(currentStep);
-      }
-      
-      return steps;
-    }
-
-    function openRequestModal(tool, system) {
-      requestTool.value = tool.name;
-      requestPlatform.value = system;
-      requestModalOverlay.classList.add('active');
-    }
-
-    function closeRequestModal() {
-      requestModalOverlay.classList.remove('active');
-      requestForm.reset();
-    }
-
-    function submitRequest() {
-      const name = document.getElementById('requestName').value;
-      const email = document.getElementById('requestEmail').value;
-      const message = document.getElementById('requestMessage').value;
-      const tool = requestTool.value;
-      const platform = requestPlatform.value;
-      
-      const formData = new FormData();
-      formData.append('nome', name || 'Anônimo');
-      formData.append('email', email || 'Não informado');
-      formData.append('mensagem', message || 'Sem mensagem adicional');
-      formData.append('ferramenta', tool);
-      formData.append('plataforma', platform);
-      formData.append('tipo', 'Solicitação de Versão');
-      
-      fetch('https://formspree.io/f/xnngvzbk', {
-        method: 'POST',
-        body: formData,
-        headers: {
-          'Accept': 'application/json'
-        }
-      })
-      .then(response => response.json())
-      .then(data => {
-        if (data.ok) {
-          showNotification('Solicitação Enviada', 'Sua solicitação foi enviada com sucesso! Entraremos em contato em breve.');
-          closeRequestModal();
-        } else {
-          showNotification('Erro', 'Não foi possível enviar sua solicitação. Tente novamente.');
-        }
-      })
-      .catch(error => {
-        console.error('Error submitting request:', error);
-        showNotification('Erro', 'Não foi possível enviar sua solicitação. Tente novamente.');
-      });
     }
 
     function switchTab(tabName) {
@@ -1921,63 +2313,30 @@
 
     function closeModal() {
       modalOverlay.classList.remove('active');
-      currentTool = null;
+      currentRom = null;
     }
 
-    function downloadTool() {
-      if (!currentTool) return;
-      
-      if (currentTool.downloads && currentTool.downloads[currentPlatform]) {
-        window.open(currentTool.downloads[currentPlatform], '_blank');
+    function confirmDownload() {
+      if (currentRom && currentRom.url) {
+        let downloadUrl;
+        
+        if (currentRom.easterEgg) {
+          const randomValue = Math.random();
+          if (randomValue < 0.2) {
+            downloadUrl = 'meusovos.html';
+          } else {
+            downloadUrl = currentRom.url;
+          }
+        } else {
+          downloadUrl = currentRom.url;
+        }
+        
+        window.open(downloadUrl, '_blank');
         closeModal();
         
         if (settings.notificationsEnabled) {
-          showNotification('Download Iniciado', `O download do ${currentTool.name} para ${currentPlatform} foi iniciado.`);
+          showNotification('Download Iniciado', `O download do Root ${currentRom.name} foi iniciado.`);
         }
-        
-        trackDownload(currentTool.name);
-      }
-    }
-
-    function trackDownload(toolName) {
-      const formData = new FormData();
-      formData.append('dispositivo', navigator.userAgent);
-      formData.append('ferramenta', toolName);
-      formData.append('mensagem', 'Entrou!');
-      
-      fetch('https://formspree.io/f/xblzjvwn', {
-        method: 'POST',
-        body: formData,
-        headers: {
-          'Accept': 'application/json'
-        }
-      })
-      .then(response => response.json())
-      .then(data => {
-        console.log('Download tracked:', data);
-      })
-      .catch(error => {
-        console.error('Error tracking download:', error);
-      });
-    }
-
-    function toggleTheme() {
-      settings.theme = settings.theme === 'light' ? 'dark' : 'light';
-      applyTheme();
-      saveSettings();
-      
-      localStorage.setItem('appTheme', settings.theme);
-    }
-
-    function applyTheme(theme) {
-      if (theme) {
-        settings.theme = theme;
-      }
-      
-      if (settings.theme === 'dark') {
-        themeToggle.innerHTML = '<span class="material-icons">light_mode</span>';
-      } else {
-        themeToggle.innerHTML = '<span class="material-icons">dark_mode</span>';
       }
     }
 
@@ -1998,29 +2357,24 @@
     }
 
     function saveSettings() {
-      localStorage.setItem('toolsSettings', JSON.stringify(settings));
+      localStorage.setItem('rootSettings', JSON.stringify(settings));
     }
 
     function loadSettings() {
-      const savedSettings = localStorage.getItem('toolsSettings');
+      const savedSettings = localStorage.getItem('rootSettings');
       if (savedSettings) {
         settings = JSON.parse(savedSettings);
       }
       
-      const sharedTheme = localStorage.getItem('appTheme');
-      if (sharedTheme) {
-        settings.theme = sharedTheme;
-      }
-      
-      applyTheme();
+      setViewMode(settings.viewMode);
     }
 
     function saveFavorites() {
-      localStorage.setItem('toolsFavorites', JSON.stringify(favorites));
+      localStorage.setItem('rootFavorites', JSON.stringify(favorites));
     }
 
     function loadFavorites() {
-      const savedFavorites = localStorage.getItem('toolsFavorites');
+      const savedFavorites = localStorage.getItem('rootFavorites');
       if (savedFavorites) {
         favorites = JSON.parse(savedFavorites);
       }
@@ -2059,8 +2413,6 @@
     setInterval(createOrb, 300);
 
     document.addEventListener('DOMContentLoaded', initializeApp);
-
-    //feito com ♡ por Riq:)
   </script>
 </body>
 </html>

@@ -164,27 +164,32 @@ const romsData = {
     */
     
     // MODELO 7
-    /*
     {
-      name: "",
-      version: "",
-      description: "",
-      size: "",
-      date: "",
-      lastUpdate: "", // Adicione aqui a última atualização
-      developer: "",
-      url: "",
+      name: "The Clover Project (Não Oficial)",
+      version: "Android 16",
+      description: "Versão 3.3 não oficial da ROM, desenvolvida por Akarizao",
+      size: "2.2 GB",
+      date: "17/10/2025",
+      lastUpdate: "21 de Outubro", // Adicione aqui a última atualização
+      developer: "Akarizao",
+      url: "https://drive.google.com/uc?export=download&id=1HgXATp9efVSoHogelhthnApZBIHvNYEh",
       details: {
-        version: "",
-        dev: "",
-        description: "",
-        changelog: [],
+        version: "Android 16",
+        dev: "Akarizao",
+        description: "Versão 3.3 não oficial da ROM, desenvolvida por Akarizao",
+        changelog: [
+          "Initial Release"
+        ],
         knownIssues: [],
-        notes: []
+        notes: [
+          "Tree de Anand",
+          "GApps incluídos",
+          "MotoCam e MoeKernel incluídos"
+        ]
       },
-      source: ""
+      source: "https://t.me/MotoG34/519191"
     },
-    */
+
 
     // ================================================================================
     // ROMS DISPONÍVEIS (NÃO ALTERE A ORDEM DAS ROMS JÁ EXISTENTES)
@@ -544,5 +549,6 @@ function getAvailableDevices() {
 // =================================================================================
 // FIM DO ARQUIVO
 // =================================================================================
+
 
 

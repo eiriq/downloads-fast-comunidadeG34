@@ -399,23 +399,28 @@ const romsData = {
     },
     
     {
-      name: "MistOS 4.1",
+      name: "MistOS 4.2",
       version: "Android 16",
-      description: "Versão oficial da ROM MistOS desenvolvida por JNW",
-      size: "1.3 GB",
-      date: "15/09/2025",
-      lastUpdate: "9 de setembro", // Adicionando a última atualização
+      description: "Versão oficial da ROM MistOS desenvolvida por JNW para o Android 16 - Codinome: Fizzle",
+      size: "1.5 GB",
+      date: "21/10/2025",
+      lastUpdate: "21 de Outubro", // Adicionando a última atualização
       developer: "JNW_SG",
-      url: "https://drive.google.com/uc?export=download&id=10hmFcHd0OYbAcRi2CXKXBhRKvdrnYZSC",
+      url: "https://drive.google.com/uc?export=download&id=12k3hFPQ-v6_VhZFLeuRwcas_RAoaS6z-",
       details: {
         version: "Android 16",
         dev: "JNW_SG",
-        description: "Versão oficial da ROM MistOS desenvolvida por JNW",
-        changelog: [],
+        description: "Versão oficial da ROM MistOS desenvolvida por JNW para o Android 16 - Codinome: Fizzle",
+        changelog: [
+          "Sincronização da fonte da ROM mais recente",
+          "Patch de segurança de setembro",
+          "Corrigido problema com o microfone de chamadas do WhatsApp",
+          "Kernel atualizado para a versão 5.4.300"
+        ],
         knownIssues: [],
         notes: []
       },
-      source: "https://t.me/MotoG34/465053"
+      source: "https://t.me/MotoG34/520620"
     },
     
     {
@@ -549,6 +554,7 @@ function getAvailableDevices() {
 // =================================================================================
 // FIM DO ARQUIVO
 // =================================================================================
+
 
 
 

@@ -441,10 +441,10 @@ const romsData = {
       version: "Android 16",
       description: "Versão não oficial da Rom Infinity X desenvolvida por Akarizao",
       size: "1.4 GB",
-      date: "25/09/2025",
-      lastUpdate: "23 de setembro", // Adicionando a última atualização
+      date: "17/10/2025",
+      lastUpdate: "17 de Outubro", // Adicionando a última atualização
       developer: "Akarizao",
-      url: "https://drive.google.com/drive/folders/1J8ezFfoplKq34qAMnYL1ZRKmITygTxzw",
+      url: "https://pixeldrain.com/l/L29to7Pj",
       details: {
         version: "Android 16",
         dev: "Akarizao",
@@ -456,16 +456,16 @@ const romsData = {
         knownIssues: [],
         notes: [
           "Gapps Incluídos",
-          "Não é incluído MotoCamera",
+          "MotoCam incluído",
           "Leia a Thread no XDA para mais informações"
         ]
       },
       credits: [
         "Obrigado para MikeNG & The Muppets pelas trees e outros contribuidores da motorola sm6375 contributors",
-        "Obrigado a Ninguém Por testar as builds de lançamento.",
+        "Obrigado a @inocity Por testar as builds de lançamento.",
         "Obrigado a Project-InfinityX pelo banner."
       ],
-      source: "https://t.me/MotoG34/484519"
+      source: "https://t.me/MotoG34/515811"
     },
     
     {
@@ -544,4 +544,5 @@ function getAvailableDevices() {
 // =================================================================================
 // FIM DO ARQUIVO
 // =================================================================================
+
 

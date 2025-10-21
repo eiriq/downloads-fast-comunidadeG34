@@ -184,7 +184,7 @@ const romsData = {
         notes: [
           "Tree de Anand",
           "GApps incluídos",
-          "MotoCam e MoeKernel incluídos"
+          "MotoCam incluído e MoeKernel compatível"
         ]
       },
       source: "https://t.me/MotoG34/519191"
@@ -549,6 +549,7 @@ function getAvailableDevices() {
 // =================================================================================
 // FIM DO ARQUIVO
 // =================================================================================
+
 
 
 

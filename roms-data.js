@@ -36,6 +36,7 @@ const romsData = {
       lastUpdate: "", // Adicione aqui a última atualização
       developer: "",
       url: "",
+      isOfficial: true, // true para oficial, false para não oficial
       details: {
         version: "",
         dev: "",
@@ -59,6 +60,7 @@ const romsData = {
       lastUpdate: "", // Adicione aqui a última atualização
       developer: "",
       url: "",
+      isOfficial: true, // true para oficial, false para não oficial
       details: {
         version: "",
         dev: "",
@@ -82,6 +84,7 @@ const romsData = {
       lastUpdate: "", // Adicione aqui a última atualização
       developer: "",
       url: "",
+      isOfficial: true, // true para oficial, false para não oficial
       details: {
         version: "",
         dev: "",
@@ -105,6 +108,7 @@ const romsData = {
       lastUpdate: "", // Adicione aqui a última atualização
       developer: "",
       url: "",
+      isOfficial: true, // true para oficial, false para não oficial
       details: {
         version: "",
         dev: "",
@@ -128,6 +132,7 @@ const romsData = {
       lastUpdate: "", // Adicione aqui a última atualização
       developer: "",
       url: "",
+      isOfficial: true, // true para oficial, false para não oficial
       details: {
         version: "",
         dev: "",
@@ -151,6 +156,7 @@ const romsData = {
       lastUpdate: "", // Adicione aqui a última atualização
       developer: "",
       url: "",
+      isOfficial: true, // true para oficial, false para não oficial
       details: {
         version: "",
         dev: "",
@@ -165,7 +171,7 @@ const romsData = {
     
     // MODELO 7
     {
-      name: "The Clover Project (Não Oficial)",
+      name: "The Clover Project",
       version: "Android 16",
       description: "Versão 3.3 não oficial da ROM, desenvolvida por Akarizao",
       size: "2.2 GB",
@@ -173,6 +179,7 @@ const romsData = {
       lastUpdate: "21 de Outubro", // Adicione aqui a última atualização
       developer: "Akarizao",
       url: "https://drive.google.com/uc?export=download&id=1HgXATp9efVSoHogelhthnApZBIHvNYEh",
+      isOfficial: false, // true para oficial, false para não oficial
       details: {
         version: "Android 16",
         dev: "Akarizao",
@@ -190,13 +197,12 @@ const romsData = {
       source: "https://t.me/MotoG34/519191"
     },
 
-
     // ================================================================================
     // ROMS DISPONÍVEIS (NÃO ALTERE A ORDEM DAS ROMS JÁ EXISTENTES)
     // ================================================================================
     
     {
-      name: "crDroid (Não Oficial)",
+      name: "crDroid",
       version: "Android 16",
       description: "Versão não oficial da crDroid baseada no Android 16 desenvolvida por irawansalt",
       size: "1.37 GB",
@@ -204,6 +210,7 @@ const romsData = {
       lastUpdate: "18 de Outubro", // Adicionando a última atualização
       developer: "irawansalt",
       url: "https://drive.google.com/uc?export=download&id=1EASjUpwAdSTJjftC-dFQOWoWZ4Fltkgx",
+      isOfficial: false, // true para oficial, false para não oficial
       details: {
         version: "Android 16",
         dev: "irawansalt",
@@ -224,6 +231,7 @@ const romsData = {
       lastUpdate: "09 de Outubro", // Adicione aqui a última atualização
       developer: "LibreMobileOS",
       url: "https://drive.google.com/uc?export=download&id=1UnvRZh_djlcO3IO4k6CSASJYOYaoUDk7",
+      isOfficial: true, // true para oficial, false para não oficial
       details: {
         version: "Android 15",
         dev: "LibreMobileOS",
@@ -244,6 +252,7 @@ const romsData = {
       lastUpdate: "25 de Outubro", // Adicionando a última atualização
       developer: "LineageOS Team",
       url: "https://drive.google.com/uc?export=download&id=1MVoXYZJTltSlfkS7yFmCGITfkALKfOTA",
+      isOfficial: true, // true para oficial, false para não oficial
       details: {
         version: "Android 16",
         dev: "LineageOS Team",
@@ -264,6 +273,7 @@ const romsData = {
       lastUpdate: "14 de Outubro", // Adicionando a última atualização
       developer: "JNW_SG",
       url: "https://drive.google.com/uc?export=download&id=1LRrU3SAxEvcd7TBY1JWgKnEHLlSfBgnn",
+      isOfficial: true, // true para oficial, false para não oficial
       details: {
         version: "Android 16",
         dev: "JNW_SG",
@@ -280,7 +290,7 @@ const romsData = {
     },
     
     {
-      name: "LineageOS (Não Oficial)",
+      name: "LineageOS",
       version: "Android 15",
       description: "Versão não oficial do LineageOS com ajustes e melhorias.",
       size: "1.2 GB",
@@ -288,6 +298,7 @@ const romsData = {
       lastUpdate: "20 de setembro", // Adicionando a última atualização
       developer: "Irawansalt",
       url: "https://drive.google.com/uc?export=download&id=17lYOIeu77sjOtVwEBqFJgvl-crEqv3OP",
+      isOfficial: false, // true para oficial, false para não oficial
       details: {
         version: "Android 15",
         dev: "Irawansalt",
@@ -323,6 +334,7 @@ const romsData = {
       lastUpdate: "17 de setembro", // Adicionando a última atualização
       developer: "Akarizao",
       url: "https://drive.google.com/uc?export=download&id=1fFdfNz5CL2TbNWfKeaNTiF9xOz0coquE",
+      isOfficial: false, // true para oficial, false para não oficial
       details: {
         version: "Android 15",
         dev: "Akarizao",
@@ -353,6 +365,7 @@ const romsData = {
       lastUpdate: "14 de setembro", // Adicionando a última atualização
       developer: "@XxxVishalxxX",
       url: "https://drive.google.com/uc?export=download&id=1Mwp06uqf_og2NJH7AlqIK-aVb2VkqjC4",
+      isOfficial: false, // true para oficial, false para não oficial
       details: {
         version: "Android 16",
         dev: "@XxxVishalxxX",
@@ -377,6 +390,7 @@ const romsData = {
       lastUpdate: "1 de setembro", // Adicionando a última atualização
       developer: "Motorola Team, AndyLin",
       url: "https://drive.google.com/uc?export=download&id=1RfY3KBwBEvQEPaKFDaLriB429IPdikzS",
+      isOfficial: false, // true para oficial, false para não oficial
       details: {
         version: "Android 15",
         dev: "Motorola Team, AndyLin",
@@ -407,6 +421,7 @@ const romsData = {
       lastUpdate: "21 de Outubro", // Adicionando a última atualização
       developer: "JNW_SG",
       url: "https://drive.google.com/uc?export=download&id=12k3hFPQ-v6_VhZFLeuRwcas_RAoaS6z-",
+      isOfficial: true, // true para oficial, false para não oficial
       details: {
         version: "Android 16",
         dev: "JNW_SG",
@@ -432,6 +447,7 @@ const romsData = {
       lastUpdate: "29 de agosto", // Adicionando a última atualização
       developer: "JNW_SG",
       url: "https://drive.google.com/uc?export=download&id=1siUx-Fz5lzIwQ2OLQDyE7cGbQPJ0OWzX",
+      isOfficial: false, // true para oficial, false para não oficial
       details: {
         version: "Android 16",
         dev: "JINWOO",
@@ -447,7 +463,7 @@ const romsData = {
     },
     
     {
-      name: "InfinityX (Não Oficial)",
+      name: "InfinityX",
       version: "Android 16",
       description: "Versão não oficial da Rom Infinity X desenvolvida por Akarizao",
       size: "1.4 GB",
@@ -455,6 +471,7 @@ const romsData = {
       lastUpdate: "17 de Outubro", // Adicionando a última atualização
       developer: "Akarizao",
       url: "https://pixeldrain.com/l/L29to7Pj",
+      isOfficial: false, // true para oficial, false para não oficial
       details: {
         version: "Android 16",
         dev: "Akarizao",
@@ -479,7 +496,7 @@ const romsData = {
     },
     
     {
-      name: "SunOS (Não Oficial)",
+      name: "SunOS",
       version: "Android 15",
       description: "ROM SunOS não oficial desenvolvida por Irawansalt",
       size: "1.3 GB",
@@ -487,6 +504,7 @@ const romsData = {
       lastUpdate: "23 de setembro", // Adicionando a última atualização
       developer: "Irawansalt",
       url: "https://drive.google.com/uc?export=download&id=1WTo-zHIfB39mMaz6AR6hdDtP9OgtDd5q",
+      isOfficial: false, // true para oficial, false para não oficial
       details: {
         version: "Android 15",
         dev: "Irawansalt",
@@ -520,6 +538,7 @@ const romsData = {
       lastUpdate: "N/A", // Adicionando a última atualização
       developer: "Motorola",
       url: "https://pt-br.support.motorola.com/app/softwarefix",
+      isOfficial: true, // true para oficial, false para não oficial
       easterEgg: true,
       details: {
         version: "Android 15",
@@ -554,9 +573,3 @@ function getAvailableDevices() {
 // =================================================================================
 // FIM DO ARQUIVO
 // =================================================================================
-
-
-
-
-
-

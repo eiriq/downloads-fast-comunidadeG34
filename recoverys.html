@@ -19,6 +19,8 @@
       --neon-blue: #00D9FF;
       --neon-pink: #FF1B2D;
       --neon-purple: #722ED1;
+      --official-color: #4CAF50;
+      --unofficial-color: #F44336;
     }
 
     * {
@@ -385,6 +387,7 @@
 
     .rom-cards.list-view {
       grid-template-columns: 1fr;
+      gap: 15px;
     }
 
     .rom-card {
@@ -407,10 +410,12 @@
 
     .rom-cards.list-view .rom-card {
       display: flex;
+      flex-direction: row;
       align-items: center;
-      justify-content: space-between;
-      padding: 20px;
+      padding: 15px;
+      min-height: 100px;
       clip-path: none;
+      border-radius: 15px;
     }
 
     .rom-card.show {
@@ -446,11 +451,74 @@
       clip-path: polygon(100% 0, 0 100%, 100% 100%);
     }
 
+    .rom-cards.list-view .rom-card::after {
+      display: none;
+    }
+
     .rom-card:hover {
       transform: translateY(-10px) scale(1.02);
       box-shadow: 0 20px 40px rgba(0, 217, 255, 0.4);
       border-color: var(--neon-blue);
       background: linear-gradient(135deg, rgba(20, 20, 35, 0.95), rgba(40, 40, 60, 0.95));
+    }
+
+    .rom-cards.list-view .rom-card:hover {
+      transform: translateY(-3px);
+    }
+
+    .rom-card.unavailable {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+
+    .rom-card.unavailable::before {
+      background: linear-gradient(90deg, #666, #999, #666);
+    }
+
+    .rom-card.unavailable::after {
+      background: linear-gradient(135deg, #666, #999);
+    }
+
+    .rom-card.unavailable:hover {
+      transform: translateY(0) scale(1);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      border-color: rgba(255, 255, 255, 0.1);
+      background: linear-gradient(135deg, rgba(20, 20, 35, 0.9), rgba(30, 30, 50, 0.9));
+    }
+
+    .unavailable-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.7);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      border-radius: 20px;
+      clip-path: polygon(0 0, 100% 0, 100% 85%, 85% 100%, 0 100%);
+    }
+
+    .rom-cards.list-view .unavailable-overlay {
+      clip-path: none;
+      border-radius: 15px;
+    }
+
+    .unavailable-icon {
+      font-size: 3rem;
+      color: #999;
+      margin-bottom: 15px;
+    }
+
+    .unavailable-text {
+      color: #ccc;
+      font-size: 1.2rem;
+      font-weight: 600;
+      text-align: center;
+      padding: 0 20px;
     }
 
     .rom-content {
@@ -461,8 +529,15 @@
     }
 
     .rom-cards.list-view .rom-content {
+      padding: 0;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
       flex: 1;
-      padding: 0 20px;
+    }
+
+    .rom-info {
+      flex: 1;
     }
 
     .rom-name {
@@ -472,11 +547,14 @@
       margin-bottom: 15px;
       text-transform: uppercase;
       letter-spacing: 1px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
 
     .rom-cards.list-view .rom-name {
-      font-size: 1.3rem;
-      margin-bottom: 0;
+      font-size: 1.2rem;
+      margin-bottom: 5px;
     }
 
     .rom-version {
@@ -492,7 +570,10 @@
     }
 
     .rom-cards.list-view .rom-version {
-      display: none;
+      margin-bottom: 0;
+      margin-right: 10px;
+      font-size: 0.7rem;
+      padding: 3px 10px;
     }
 
     .rom-description {
@@ -515,7 +596,9 @@
     }
 
     .rom-cards.list-view .rom-details {
-      display: none;
+      display: flex;
+      gap: 8px;
+      margin-bottom: 0;
     }
 
     .rom-detail {
@@ -529,9 +612,18 @@
       border-radius: 50px;
     }
 
+    .rom-cards.list-view .rom-detail {
+      font-size: 0.7rem;
+      padding: 3px 8px;
+    }
+
     .rom-detail .material-icons {
       font-size: 1rem;
       color: var(--accent-color);
+    }
+
+    .rom-cards.list-view .rom-detail .material-icons {
+      font-size: 0.8rem;
     }
 
     .rom-actions {
@@ -542,6 +634,7 @@
 
     .rom-cards.list-view .rom-actions {
       margin-top: 0;
+      margin-left: 10px;
     }
 
     .favorite-button {
@@ -556,6 +649,11 @@
       cursor: pointer;
       transition: all 0.2s ease;
       color: var(--text-secondary);
+    }
+
+    .rom-cards.list-view .favorite-button {
+      width: 35px;
+      height: 35px;
     }
 
     .favorite-button:hover {
@@ -574,6 +672,10 @@
 
     .favorite-button .material-icons {
       font-size: 1.2rem;
+    }
+
+    .rom-cards.list-view .favorite-button .material-icons {
+      font-size: 1rem;
     }
 
     .download-button {
@@ -597,9 +699,8 @@
     }
 
     .rom-cards.list-view .download-button {
-      width: auto;
-      padding: 10px 15px;
-      font-size: 0.9rem;
+      padding: 8px 15px;
+      font-size: 0.8rem;
       flex: none;
     }
 
@@ -1145,28 +1246,6 @@
       cursor: pointer;
     }
 
-    .orb {
-      position: fixed;
-      top: -10px;
-      z-index: 1;
-      user-select: none;
-      cursor: default;
-      animation: orbFall linear infinite;
-      border-radius: 50%;
-      box-shadow: 0 0 10px var(--primary-color);
-    }
-
-    @keyframes orbFall {
-      0% {
-        transform: translateY(-100px) rotate(0deg);
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(calc(100vh + 100px)) rotate(360deg);
-        opacity: 0;
-      }
-    }
-
     .loader-container {
       position: fixed;
       top: 0;
@@ -1316,6 +1395,43 @@
       }
     }
 
+    .status-tag {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-left: 10px;
+      animation: pulse 2s infinite;
+    }
+
+    .status-tag.official {
+      background-color: rgba(76, 175, 80, 0.2);
+      color: var(--official-color);
+      border: 1px solid var(--official-color);
+    }
+
+    .status-tag.unofficial {
+      background-color: rgba(244, 67, 54, 0.2);
+      color: var(--unofficial-color);
+      border: 1px solid var(--unofficial-color);
+    }
+
+    @keyframes pulse {
+      0% {
+        box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4);
+      }
+      70% {
+        box-shadow: 0 0 0 8px rgba(255, 255, 255, 0);
+      }
+      100% {
+        box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+      }
+    }
+
     @media (max-width: 768px) {
       .rom-cards {
         grid-template-columns: 1fr;
@@ -1353,6 +1469,35 @@
         width: 50px;
         height: 50px;
         font-size: 1.2rem;
+      }
+
+      .rom-cards.list-view .rom-card {
+        padding: 10px;
+        min-height: 80px;
+      }
+
+      .rom-cards.list-view .rom-name {
+        font-size: 1rem;
+      }
+
+      .rom-cards.list-view .rom-version {
+        font-size: 0.6rem;
+        padding: 2px 6px;
+      }
+
+      .rom-cards.list-view .rom-detail {
+        font-size: 0.6rem;
+        padding: 2px 6px;
+      }
+
+      .rom-cards.list-view .favorite-button {
+        width: 30px;
+        height: 30px;
+      }
+
+      .rom-cards.list-view .download-button {
+        padding: 6px 10px;
+        font-size: 0.7rem;
       }
     }
   </style>
@@ -1981,30 +2126,42 @@
         romCard.classList.add('easter-egg');
       }
       
+      if (rom.unavailable) {
+        romCard.classList.add('unavailable');
+      }
+      
       const isFavorite = favorites.some(fav => fav.name === rom.name && fav.developer === rom.developer);
+      
+      // Remove "Não Oficial" do nome da ROM
+      const cleanName = rom.name.replace(/\s*\(Não Oficial\)\s*/g, '');
+      
+      // Determinar a classe da tag de status
+      const statusClass = rom.isOfficial ? 'official' : 'unofficial';
+      const statusText = rom.isOfficial ? 'Oficial' : 'Não Oficial';
       
       romCard.innerHTML = `
         <div class="rom-content">
-          <h3 class="rom-name">${rom.name}</h3>
-          <span class="rom-version">${rom.version}</span>
-          <p class="rom-description">${rom.description}</p>
-          <div class="rom-details">
-            <div class="rom-detail">
-              <span class="material-icons">sd_card</span>
-              <span>${rom.size}</span>
+          <div class="rom-info">
+            <h3 class="rom-name">
+              ${cleanName}
+              <span class="status-tag ${statusClass}">${statusText}</span>
+            </h3>
+            <span class="rom-version">${rom.version}</span>
+            <div class="rom-details">
+              <div class="rom-detail">
+                <span class="material-icons">sd_card</span>
+                <span>${rom.size}</span>
+              </div>
+              <div class="rom-detail">
+                <span class="material-icons">calendar_today</span>
+                <span>${rom.date}</span>
+              </div>
+              <div class="rom-detail">
+                <span class="material-icons">person</span>
+                <span>${rom.developer}</span>
+              </div>
             </div>
-            <div class="rom-detail">
-              <span class="material-icons">calendar_today</span>
-              <span>${rom.date}</span>
-            </div>
-            <div class="rom-detail">
-              <span class="material-icons">update</span>
-              <span>${rom.lastUpdate || 'N/A'}</span>
-            </div>
-            <div class="rom-detail">
-              <span class="material-icons">person</span>
-              <span>${rom.developer}</span>
-            </div>
+            <p class="rom-description">${rom.description}</p>
           </div>
         </div>
         <div class="rom-actions">
@@ -2017,6 +2174,17 @@
           </button>
         </div>
       `;
+      
+      // Adicionar overlay de indisponibilidade se necessário
+      if (rom.unavailable) {
+        const unavailableOverlay = document.createElement('div');
+        unavailableOverlay.className = 'unavailable-overlay';
+        unavailableOverlay.innerHTML = `
+          <span class="material-icons unavailable-icon">block</span>
+          <div class="unavailable-text">${rom.message || 'Indisponível no momento'}</div>
+        `;
+        romCard.appendChild(unavailableOverlay);
+      }
       
       setTimeout(() => {
         romCard.classList.add('show');
@@ -2031,6 +2199,12 @@
       romCard.querySelector('.download-button').addEventListener('click', function() {
         const romIndex = this.getAttribute('data-rom-index');
         const selectedRom = rom.isDeveloperGroup ? rom.roms[romIndex] : rom;
+        
+        if (selectedRom.unavailable) {
+          showNotification('Indisponível', 'Esta recovery não está disponível para download no momento.');
+          return;
+        }
+        
         showRomDetails(selectedRom);
       });
       
@@ -2054,7 +2228,10 @@
             url: rom.url,
             details: rom.details,
             source: rom.source,
-            easterEgg: rom.easterEgg || false
+            easterEgg: rom.easterEgg || false,
+            isOfficial: rom.isOfficial || false,
+            unavailable: rom.unavailable || false,
+            message: rom.message || ''
           });
           showNotification('Adicionado aos Favoritos', `${romName} foi adicionada aos seus favoritos.`);
           
@@ -2278,41 +2455,7 @@
       }
     }
 
-    function createOrb() {
-      const orb = document.createElement('div');
-      orb.className = 'orb';
-      
-      const currentTheme = localStorage.getItem('selectedTheme') || 'default';
-      let orbColor = '#FF1B2D';
-      
-      if (currentTheme === 'red') {
-        orbColor = '#FF1B2D';
-      } else if (currentTheme === 'blue') {
-        orbColor = '#0066FF';
-      } else if (currentTheme === 'green') {
-        orbColor = '#00C853';
-      }
-      
-      orb.style.backgroundColor = orbColor;
-      orb.style.boxShadow = `0 0 10px ${orbColor}`;
-      orb.style.left = Math.random() * window.innerWidth + 'px';
-      orb.style.animationDuration = Math.random() * 3 + 5 + 's';
-      orb.style.opacity = Math.random();
-      orb.style.width = Math.random() * 10 + 10 + 'px';
-      orb.style.height = orb.style.width;
-      
-      document.body.appendChild(orb);
-      
-      setTimeout(() => {
-        orb.remove();
-      }, 8000);
-    }
-
-    setInterval(createOrb, 300);
-
     document.addEventListener('DOMContentLoaded', initializeApp);
-
-    // Feito com ♡ por Riq:)
   </script>
 </body>
 </html>

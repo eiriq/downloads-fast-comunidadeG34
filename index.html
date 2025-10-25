@@ -924,28 +924,6 @@
       font-size: 1.2rem;
     }
 
-    .orb {
-      position: fixed;
-      top: -10px;
-      z-index: 1;
-      user-select: none;
-      cursor: default;
-      animation: orbFall linear infinite;
-      border-radius: 50%;
-      box-shadow: 0 0 10px var(--primary-color);
-    }
-
-    @keyframes orbFall {
-      0% {
-        transform: translateY(-100px) rotate(0deg);
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(calc(100vh + 100px)) rotate(360deg);
-        opacity: 0;
-      }
-    }
-
     .loader-container {
       position: fixed;
       top: 0;
@@ -1243,6 +1221,18 @@
           <span class="material-icons category-icon">apps</span>
           <h3 class="category-name">GApps</h3>
           <p class="category-description">Use os aplicativos do google em seu sistema</p>
+        </div>
+        
+        <div class="category-card" data-category="gcams">
+          <span class="material-icons category-icon">camera_alt</span>
+          <h3 class="category-name">GCAMs</h3>
+          <p class="category-description">Melhore a qualidade das suas fotos!</p>
+        </div>
+        
+        <div class="category-card" data-category="kernels">
+          <span class="material-icons category-icon">memory</span>
+          <h3 class="category-name">Kernels</h3>
+          <p class="category-description">Otimize o desempenho do seu dispositivo!</p>
         </div>
       </div>
     </div>
@@ -1833,38 +1823,6 @@
     function applyPrimaryColor() {
       document.documentElement.style.setProperty('--primary-color', settings.primaryColor);
     }
-
-    function createOrb() {
-      const orb = document.createElement('div');
-      orb.className = 'orb';
-      
-      const currentTheme = localStorage.getItem('selectedTheme') || 'default';
-      let orbColor = '#FF1B2D';
-      
-      if (currentTheme === 'red') {
-        orbColor = '#FF1B2D';
-      } else if (currentTheme === 'blue') {
-        orbColor = '#0066FF';
-      } else if (currentTheme === 'green') {
-        orbColor = '#00C853';
-      }
-      
-      orb.style.backgroundColor = orbColor;
-      orb.style.boxShadow = `0 0 10px ${orbColor}`;
-      orb.style.left = Math.random() * window.innerWidth + 'px';
-      orb.style.animationDuration = Math.random() * 3 + 5 + 's';
-      orb.style.opacity = Math.random();
-      orb.style.width = Math.random() * 10 + 10 + 'px';
-      orb.style.height = orb.style.width;
-      
-      document.body.appendChild(orb);
-      
-      setTimeout(() => {
-        orb.remove();
-      }, 8000);
-    }
-
-    setInterval(createOrb, 300);
 
     document.addEventListener('DOMContentLoaded', initializeApp);
   </script>

@@ -2076,10 +2076,10 @@
       
       const isFavorite = favorites.some(fav => fav.name === rom.name && fav.developer === rom.developer);
       
-      // Remove "Não Oficial" do nome da ROM
+      // bom, aqui a gente remove "Não Oficial" do nome da ROM
       const cleanName = rom.name.replace(/\s*\(Não Oficial\)\s*/g, '');
       
-      // Determinar a classe da tag de status
+      // Aqui determinar a classe da tag de status
       const statusClass = rom.isOfficial ? 'official' : 'unofficial';
       const statusText = rom.isOfficial ? 'Oficial' : 'Não Oficial';
       

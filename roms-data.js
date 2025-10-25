@@ -160,7 +160,7 @@ const romsData = {
         version: "Android 16",
         dev: "heybyben",
         description: "Versão estável primária da ROM LumineDroid oficial para MotoG34",
-        changelog: [Nenhum :D],
+        changelog: [],
         knownIssues: [],
         notes: []
       },
@@ -571,4 +571,5 @@ function getAvailableDevices() {
 // =================================================================================
 // FIM DO ARQUIVO
 // =================================================================================
+
 

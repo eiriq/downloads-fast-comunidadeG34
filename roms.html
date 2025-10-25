@@ -19,6 +19,8 @@
       --neon-blue: #00D9FF;
       --neon-pink: #FF1B2D;
       --neon-purple: #722ED1;
+      --official-color: #4CAF50;
+      --unofficial-color: #F44336;
     }
 
     * {
@@ -490,6 +492,9 @@
       margin-bottom: 15px;
       text-transform: uppercase;
       letter-spacing: 1px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
 
     .rom-cards.list-view .rom-name {
@@ -1186,28 +1191,6 @@
       cursor: pointer;
     }
 
-    .orb {
-      position: fixed;
-      top: -10px;
-      z-index: 1;
-      user-select: none;
-      cursor: default;
-      animation: orbFall linear infinite;
-      border-radius: 50%;
-      box-shadow: 0 0 10px var(--primary-color);
-    }
-
-    @keyframes orbFall {
-      0% {
-        transform: translateY(-100px) rotate(0deg);
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(calc(100vh + 100px)) rotate(360deg);
-        opacity: 0;
-      }
-    }
-
     .loader-container {
       position: fixed;
       top: 0;
@@ -1354,6 +1337,43 @@
         outline: solid 0 transparent;
         outline-offset: 20px;
         opacity: 0;
+      }
+    }
+
+    .status-tag {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-left: 10px;
+      animation: pulse 2s infinite;
+    }
+
+    .status-tag.official {
+      background-color: rgba(76, 175, 80, 0.2);
+      color: var(--official-color);
+      border: 1px solid var(--official-color);
+    }
+
+    .status-tag.unofficial {
+      background-color: rgba(244, 67, 54, 0.2);
+      color: var(--unofficial-color);
+      border: 1px solid var(--unofficial-color);
+    }
+
+    @keyframes pulse {
+      0% {
+        box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4);
+      }
+      70% {
+        box-shadow: 0 0 0 8px rgba(255, 255, 255, 0);
+      }
+      100% {
+        box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
       }
     }
 
@@ -2056,10 +2076,20 @@
       
       const isFavorite = favorites.some(fav => fav.name === rom.name && fav.developer === rom.developer);
       
+      // Remove "Não Oficial" do nome da ROM
+      const cleanName = rom.name.replace(/\s*\(Não Oficial\)\s*/g, '');
+      
+      // Determinar a classe da tag de status
+      const statusClass = rom.isOfficial ? 'official' : 'unofficial';
+      const statusText = rom.isOfficial ? 'Oficial' : 'Não Oficial';
+      
       romCard.innerHTML = `
         <div class="rom-content">
           <div class="rom-info">
-            <h3 class="rom-name">${rom.name}</h3>
+            <h3 class="rom-name">
+              ${cleanName}
+              <span class="status-tag ${statusClass}">${statusText}</span>
+            </h3>
             <span class="rom-version">${rom.version}</span>
             <div class="rom-details">
               <div class="rom-detail">
@@ -2075,6 +2105,7 @@
                 <span>${rom.developer}</span>
               </div>
             </div>
+            <p class="rom-description">${rom.description}</p>
           </div>
         </div>
         <div class="rom-actions">
@@ -2124,7 +2155,8 @@
             url: rom.url,
             details: rom.details,
             source: rom.source,
-            easterEgg: rom.easterEgg || false
+            easterEgg: rom.easterEgg || false,
+            isOfficial: rom.isOfficial || false
           });
           showNotification('Adicionado aos Favoritos', `${romName} foi adicionada aos seus favoritos.`);
           
@@ -2347,38 +2379,6 @@
         favorites = JSON.parse(savedFavorites);
       }
     }
-
-    function createOrb() {
-      const orb = document.createElement('div');
-      orb.className = 'orb';
-      
-      const currentTheme = localStorage.getItem('selectedTheme') || 'default';
-      let orbColor = '#FF1B2D';
-      
-      if (currentTheme === 'red') {
-        orbColor = '#FF1B2D';
-      } else if (currentTheme === 'blue') {
-        orbColor = '#0066FF';
-      } else if (currentTheme === 'green') {
-        orbColor = '#00C853';
-      }
-      
-      orb.style.backgroundColor = orbColor;
-      orb.style.boxShadow = `0 0 10px ${orbColor}`;
-      orb.style.left = Math.random() * window.innerWidth + 'px';
-      orb.style.animationDuration = Math.random() * 3 + 5 + 's';
-      orb.style.opacity = Math.random();
-      orb.style.width = Math.random() * 10 + 10 + 'px';
-      orb.style.height = orb.style.width;
-      
-      document.body.appendChild(orb);
-      
-      setTimeout(() => {
-        orb.remove();
-      }, 8000);
-    }
-
-    setInterval(createOrb, 300);
 
     document.addEventListener('DOMContentLoaded', initializeApp);
   </script>

@@ -146,28 +146,26 @@ const romsData = {
     */
     
     // MODELO 6
-    /*
     {
-      name: "",
-      version: "",
-      description: "",
-      size: "",
-      date: "",
-      lastUpdate: "", // Adicione aqui a última atualização
-      developer: "",
-      url: "",
+      name: "LumineDroid",
+      version: "Android 16",
+      description: "Versão estável primária da ROM LumineDroid oficial para MotoG34",
+      size: "2.1 GB",
+      date: "25/10/2025",
+      lastUpdate: "25 de Outubro", // Adicione aqui a última atualização
+      developer: "heybyben",
+      url: "https://drive.google.com/uc?export=download&id=1U4-UJrizxaWaHfsulY3IV4fGIxyedhAm",
       isOfficial: true, // true para oficial, false para não oficial
       details: {
-        version: "",
-        dev: "",
-        description: "",
-        changelog: [],
+        version: "Android 16",
+        dev: "heybyben",
+        description: "Versão estável primária da ROM LumineDroid oficial para MotoG34",
+        changelog: [Nenhum :D],
         knownIssues: [],
         notes: []
       },
-      source: ""
+      source: "https://t.me/MotoG34/525509"
     },
-    */
     
     // MODELO 7
     {
@@ -573,3 +571,4 @@ function getAvailableDevices() {
 // =================================================================================
 // FIM DO ARQUIVO
 // =================================================================================
+

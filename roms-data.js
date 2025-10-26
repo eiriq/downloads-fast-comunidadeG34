@@ -122,28 +122,28 @@ const romsData = {
     */
     
     // MODELO 5
-    /*
     {
-      name: "",
-      version: "",
-      description: "",
-      size: "",
-      date: "",
-      lastUpdate: "", // Adicione aqui a última atualização
-      developer: "",
-      url: "",
-      isOfficial: true, // true para oficial, false para não oficial
+      name: "LineageOS",
+      version: "Android 16",
+      description: "Versão inicial não oficial da LineageOS, por Anand, base Android 16",
+      size: "1.3 GB",
+      date: "26/10/2025",
+      lastUpdate: "26 de Outubro", // Adicione aqui a última atualização
+      developer: "Anand",
+      url: "https://drive.google.com/uc?export=download&id=1x_waURODyuSrs2i0Mrl1Q5DIsgxjCMS4",
+      isOfficial: false, // true para oficial, false para não oficial
       details: {
-        version: "",
-        dev: "",
-        description: "",
+        version: "Android 16",
+        dev: "Anand",
+        description: "Versão inicial não oficial da LineageOS, por Anand, base Android 16",
         changelog: [],
         knownIssues: [],
-        notes: []
+        notes: [
+        "Versão inicial, cuidado."
+        ]
       },
-      source: ""
+      source: "https://t.me/MotoG34/527933"
     },
-    */
     
     // MODELO 6
     {
@@ -571,5 +571,6 @@ function getAvailableDevices() {
 // =================================================================================
 // FIM DO ARQUIVO
 // =================================================================================
+
 
 
